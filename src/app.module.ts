@@ -8,6 +8,7 @@ import { User } from './user/models/user.model';
 import { AuthModule } from './auth/auth.module';
 import { Otp } from './auth/models/otp.model';
 import { MailModule } from './mail/mail.module';
+import { CityModule } from './city/city.module';
 import { PaymentTypeModule } from './payment_type/payment_type.module';
 import { PaymentType } from './payment_type/models/payment_type.model';
 import { CategoryModule } from './category/category.module';
@@ -32,6 +33,7 @@ import { Category } from './category/models/category.model';
     UserModule,
     AuthModule,
     MailModule,
+    CityModule,
     PaymentTypeModule,
     CategoryModule
   ],
