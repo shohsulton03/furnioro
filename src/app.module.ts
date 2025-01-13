@@ -8,6 +8,7 @@ import { User } from './user/models/user.model';
 import { AuthModule } from './auth/auth.module';
 import { Otp } from './auth/models/otp.model';
 import { MailModule } from './mail/mail.module';
+import { CityModule } from './city/city.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { MailModule } from './mail/mail.module';
     UserModule,
     AuthModule,
     MailModule,
+    CityModule,
   ],
   controllers: [],
   providers: [],
