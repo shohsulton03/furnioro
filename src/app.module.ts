@@ -32,6 +32,9 @@ import { Image } from './images/models/image.model';
 import { FileModule } from './file/file.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'node:path';
+import { CartItem } from './cart_items/models/cart_item.model';
+import { CartItemsModule } from './cart_items/cart_items.module';
+import { WishlistModule } from './wishlist/wishlist.module';
 
 @Module({
   imports: [
@@ -61,6 +64,7 @@ import { join } from 'node:path';
         City,
         Wishlist,
         Image,
+        CartItem
       ],
       autoLoadModels: true,
       sync: { alter: true },
@@ -81,6 +85,8 @@ import { join } from 'node:path';
     CartModule,
     ImagesModule,
     FileModule,
+    CartItemsModule,
+    WishlistModule
   ],
   controllers: [],
   providers: [],
