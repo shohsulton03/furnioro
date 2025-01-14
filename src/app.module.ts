@@ -18,6 +18,7 @@ import { ProductModule } from './product/product.module';
 import { Product } from './product/model/product.model';
 import { OrderModule } from './order/order.module';
 import { Order } from './order/models/order.model';
+import { PaymentModule } from './payment/payment.module';
 
 @Module({
   imports: [
@@ -43,7 +44,8 @@ import { Order } from './order/models/order.model';
     PaymentTypeModule,
     CategoryModule,
     ProductModule,
-    OrderModule
+    OrderModule,
+    PaymentModule
   ],
   controllers: [],
   providers: [],
