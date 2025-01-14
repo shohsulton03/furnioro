@@ -19,7 +19,6 @@ import { OrderItem } from './order-item/models/order-item.model';
 import { ProductModule } from './product/product.module';
 import { OrderModule } from './order/order.module';
 import { PaymentModule } from './payment/payment.module';
-import { WishlistModule } from './wishlist/wishlist.module';
 import { Product } from './product/model/product.model';
 import { Order } from './order/models/order.model';
 import { CartModule } from './cart/cart.module';
@@ -78,7 +77,6 @@ import { join } from 'node:path';
     ProductModule,
     OrderModule,
     PaymentModule,
-    WishlistModule,
     OrderItemModule,
     CartModule,
     ImagesModule,
