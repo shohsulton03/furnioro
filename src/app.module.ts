@@ -17,17 +17,10 @@ import { Category } from './category/models/category.model';
 import { OrderItemModule } from './order-item/order-item.module';
 import { OrderItem } from './order-item/models/order-item.model';
 import { ProductModule } from './product/product.module';
-<<<<<<< HEAD
 import { OrderModule } from './order/order.module';
 import { PaymentModule } from './payment/payment.module';
 import { Product } from './product/model/product.model';
 import { Order } from './order/models/order.model';
-=======
-import { Product } from './product/model/product.model';
-import { OrderModule } from './order/order.module';
-import { Order } from './order/models/order.model';
-import { PaymentModule } from './payment/payment.module';
->>>>>>> ac396ae3d1cdc72a4fc03508644b79ea92f25aca
 
 @Module({
   imports: [
@@ -39,12 +32,7 @@ import { PaymentModule } from './payment/payment.module';
       username: process.env.POSTGRES_USER,
       password: process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_DB,
-<<<<<<< HEAD
       models: [Admin, User, Otp, PaymentType, Category, Product, Order, OrderItem],
-=======
-      models: [Admin, User, Otp, PaymentType, Category, OrderItem],
-      models: [Admin, User, Otp, PaymentType, Category, Product, Order],
->>>>>>> ac396ae3d1cdc72a4fc03508644b79ea92f25aca
       autoLoadModels: true,
       sync: { alter: true },
       logging: false,
@@ -57,17 +45,10 @@ import { PaymentModule } from './payment/payment.module';
     CityModule,
     PaymentTypeModule,
     CategoryModule,
-<<<<<<< HEAD
     ProductModule,
     OrderModule,
     PaymentModule,
     OrderItemModule
-=======
-    OrderItemModule
-    ProductModule,
-    OrderModule,
-    PaymentModule
->>>>>>> ac396ae3d1cdc72a4fc03508644b79ea92f25aca
   ],
   controllers: [],
   providers: [],
