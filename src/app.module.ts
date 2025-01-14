@@ -19,6 +19,7 @@ import { Product } from './product/model/product.model';
 import { OrderModule } from './order/order.module';
 import { Order } from './order/models/order.model';
 import { PaymentModule } from './payment/payment.module';
+import { WishlistModule } from './wishlist/wishlist.module';
 
 @Module({
   imports: [
@@ -45,7 +46,8 @@ import { PaymentModule } from './payment/payment.module';
     CategoryModule,
     ProductModule,
     OrderModule,
-    PaymentModule
+    PaymentModule,
+    WishlistModule
   ],
   controllers: [],
   providers: [],
