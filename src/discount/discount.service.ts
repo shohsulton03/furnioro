@@ -11,7 +11,7 @@ export class DiscountService {
     @InjectModel(Discount) private readonly discountModel: typeof Discount
   ){}
   create(createDiscountDto: CreateDiscountDto) {
-    return this.discountModel,this.create(createDiscountDto);
+    return this.discountModel.create(createDiscountDto);
   }
 
   findAll() {
