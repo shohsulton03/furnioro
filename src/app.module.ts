@@ -12,6 +12,10 @@ import { PaymentTypeModule } from './payment_type/payment_type.module';
 import { PaymentType } from './payment_type/models/payment_type.model';
 import { CategoryModule } from './category/category.module';
 import { Category } from './category/models/category.model';
+import { ProductModule } from './product/product.module';
+import { Product } from './product/model/product.model';
+import { OrderModule } from './order/order.module';
+import { Order } from './order/models/order.model';
 
 @Module({
   imports: [
@@ -23,7 +27,7 @@ import { Category } from './category/models/category.model';
       username: process.env.POSTGRES_USER,
       password: process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_DB,
-      models: [Admin, User, Otp, PaymentType, Category],
+      models: [Admin, User, Otp, PaymentType, Category, Product, Order],
       autoLoadModels: true,
       sync: { alter: true },
       logging: false,
@@ -33,7 +37,9 @@ import { Category } from './category/models/category.model';
     AuthModule,
     MailModule,
     PaymentTypeModule,
-    CategoryModule
+    CategoryModule,
+    ProductModule,
+    OrderModule
   ],
   controllers: [],
   providers: [],
