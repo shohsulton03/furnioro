@@ -1,5 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { Column, DataType, Table, Model } from "sequelize-typescript";
+import { Column, DataType, Table, Model } from 'sequelize-typescript';
 
 
 interface ICityAttr {
