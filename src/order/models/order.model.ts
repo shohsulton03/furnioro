@@ -115,7 +115,7 @@ export class Order extends Model<Order, IOrderCreateinAttr> {
     description: 'Total amount for the order',
   })
   @Column({
-    type: DataType.INTEGER,
+    type: DataType.DECIMAL(15, 2),
   })
   total_amount: number;
 
