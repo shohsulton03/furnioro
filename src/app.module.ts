@@ -19,10 +19,10 @@ import { OrderItem } from './order-item/models/order-item.model';
 import { ProductModule } from './product/product.module';
 import { OrderModule } from './order/order.module';
 import { PaymentModule } from './payment/payment.module';
-import { WishlistModule } from './wishlist/wishlist.module';
 import { Product } from './product/model/product.model';
 import { Order } from './order/models/order.model';
 import { CartModule } from './cart/cart.module';
+import { Cart } from './cart/models/cart.model';
 
 @Module({
   imports: [
@@ -34,7 +34,7 @@ import { CartModule } from './cart/cart.module';
       username: process.env.POSTGRES_USER,
       password: process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_DB,
-      models: [Admin, User, Otp, PaymentType, Category, Product, Order, OrderItem],
+      models: [Admin, User, Otp, PaymentType, Category, Product, Order, OrderItem, Cart],
       autoLoadModels: true,
       sync: { alter: true },
       logging: false,
@@ -49,6 +49,8 @@ import { CartModule } from './cart/cart.module';
     CategoryModule,
     ProductModule,
     OrderModule,
+    PaymentModule,
+    OrderItemModule,
     CartModule
   ],
   controllers: [],
