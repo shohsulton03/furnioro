@@ -1,5 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { Column, DataType, HasMany, Model, Table } from "sequelize-typescript";
+import { BelongsTo, Column, DataType, HasMany, Model, Table } from "sequelize-typescript";
+import { Payment } from "../../payment/models/payment.model";
 
 interface IPaymentTypeAttr{
     name:string
@@ -28,4 +29,7 @@ export class PaymentType extends Model<PaymentType, IPaymentTypeAttr> {
     allowNull: false,
   })
   name: string;
+
+  @HasMany(() => Payment)
+  payments : Payment[]
 }

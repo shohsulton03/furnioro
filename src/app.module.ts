@@ -24,10 +24,22 @@ import { Product } from './product/model/product.model';
 import { Order } from './order/models/order.model';
 import { CartModule } from './cart/cart.module';
 import { Cart } from './cart/models/cart.model';
+import { Payment } from './payment/models/payment.model';
+import { Discount } from './discount/models/discount.model';
+import { City } from './city/models/city.model';
+import { Wishlist } from './wishlist/models/wishlist.model';
+import { ImagesModule } from './images/images.module';
+import { Image } from './images/models/image.model';
+import { FileModule } from './file/file.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'node:path';
 
 @Module({
   imports: [
     ConfigModule.forRoot({ envFilePath: '.env', isGlobal: true }),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, 'static'),
+    }),
     SequelizeModule.forRoot({
       dialect: 'postgres',
       host: process.env.POSTGRES_HOST,
@@ -35,7 +47,22 @@ import { Cart } from './cart/models/cart.model';
       username: process.env.POSTGRES_USER,
       password: process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_DB,
-      models: [Admin, User, Otp, PaymentType, Category, Product, Order, OrderItem, Cart],
+      models: [
+        Admin,
+        User,
+        Otp,
+        PaymentType,
+        Category,
+        Product,
+        Order,
+        OrderItem,
+        Cart,
+        Payment,
+        Discount,
+        City,
+        Wishlist,
+        Image,
+      ],
       autoLoadModels: true,
       sync: { alter: true },
       logging: false,
@@ -53,7 +80,9 @@ import { Cart } from './cart/models/cart.model';
     PaymentModule,
     WishlistModule,
     OrderItemModule,
-    CartModule
+    CartModule,
+    ImagesModule,
+    FileModule,
   ],
   controllers: [],
   providers: [],

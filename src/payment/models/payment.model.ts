@@ -1,5 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { Column, DataType, Model, Table } from "sequelize-typescript";
+import { BelongsTo, Column, DataType, ForeignKey, HasMany, Model, Table } from "sequelize-typescript";
+import { PaymentType } from "../../payment_type/models/payment_type.model";
 
 export enum Payment_Status {
     PENDING = 'pending',
@@ -23,7 +24,8 @@ export class Payment extends Model<Payment, IPaymentAttr>{
     })
     @Column({ 
         type: DataType.INTEGER, 
-        primaryKey: true 
+        primaryKey: true ,
+        autoIncrement: true
     })
     id: string;
 
@@ -40,6 +42,7 @@ export class Payment extends Model<Payment, IPaymentAttr>{
         example: 1,
         description: 'Payment type id',
     })
+    @ForeignKey(() => PaymentType)
     @Column({
         type: DataType.INTEGER,
     })
@@ -66,4 +69,6 @@ export class Payment extends Model<Payment, IPaymentAttr>{
     })
     status: Payment_Status;
 
+    @BelongsTo(() => PaymentType)
+    paymentType: PaymentType
 }
