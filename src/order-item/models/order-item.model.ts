@@ -3,7 +3,7 @@ import { Column, DataType, ForeignKey, Model, Table } from 'sequelize-typescript
 // import { Product } from '../product/product.model'; 
 
 interface IOrderItemCreationAttr{
-    order_is:number
+    order_id:number
     product_id:number
     quantity: number;
     price: number;
