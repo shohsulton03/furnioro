@@ -14,9 +14,13 @@ import { PaymentTypeModule } from './payment_type/payment_type.module';
 import { PaymentType } from './payment_type/models/payment_type.model';
 import { CategoryModule } from './category/category.module';
 import { Category } from './category/models/category.model';
+import { OrderItemModule } from './order-item/order-item.module';
+import { OrderItem } from './order-item/models/order-item.model';
 import { ProductModule } from './product/product.module';
-import { Product } from './product/model/product.model';
 import { OrderModule } from './order/order.module';
+import { PaymentModule } from './payment/payment.module';
+import { WishlistModule } from './wishlist/wishlist.module';
+import { Product } from './product/model/product.model';
 import { Order } from './order/models/order.model';
 import { CartModule } from './cart/cart.module';
 
@@ -30,7 +34,7 @@ import { CartModule } from './cart/cart.module';
       username: process.env.POSTGRES_USER,
       password: process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_DB,
-      models: [Admin, User, Otp, PaymentType, Category, Product, Order],
+      models: [Admin, User, Otp, PaymentType, Category, Product, Order, OrderItem],
       autoLoadModels: true,
       sync: { alter: true },
       logging: false,
