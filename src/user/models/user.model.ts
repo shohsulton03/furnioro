@@ -1,6 +1,8 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { Column, DataType, HasMany, Model, Table } from "sequelize-typescript";
 import { Cart } from "src/cart/models/cart.model";
+import { Order } from "src/order/models/order.model";
+import { Rating } from "src/rating/models/rating.model";
 import { Wishlist } from "src/wishlist/models/wishlist.model";
 
 interface IUserCreationAttr {
@@ -82,4 +84,10 @@ export class User extends Model<User, IUserCreationAttr> {
 
   @HasMany(() => Cart)
   cart: Cart[];
+
+  @HasMany(() => Rating)
+  rating: Rating[];
+
+  @HasMany(() => Order)
+  orders: Order[];
 }

@@ -1,10 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Column, DataType, Table, Model, ForeignKey, BelongsTo, HasMany } from 'sequelize-typescript';
+import { Column, DataType, Table, Model, HasMany, ForeignKey, BelongsTo } from 'sequelize-typescript';
+import { CartItem } from 'src/cart_items/models/cart_item.model';
+import { OrderItem } from 'src/order-item/models/order-item.model';
+import { Rating } from 'src/rating/models/rating.model';
 import { Discount } from '../../discount/models/discount.model';
 import { Category } from '../../category/models/category.model';
 import { Wishlist } from '../../wishlist/models/wishlist.model';
-import { OrderItem } from '../../order-item/models/order-item.model';
-import { CartItem } from 'src/cart_items/models/cart_item.model';
 
 interface IProductCreationAttr {
   title: string;
@@ -226,4 +227,8 @@ export class Product extends Model<Product, IProductCreationAttr> {
 
   @HasMany(() => CartItem)
   cartItem: CartItem[];
+
+  @HasMany(() => Rating)
+  rating: Rating[];
+
 }
