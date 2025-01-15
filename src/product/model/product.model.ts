@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Column, DataType, Table, Model } from 'sequelize-typescript';
+import { Column, DataType, Table, Model, HasMany } from 'sequelize-typescript';
+import { Rating } from 'src/rating/models/rating.model';
 
 interface IProductCreationAttr {
   title: string;
@@ -185,4 +186,7 @@ export class Product extends Model<Product, IProductCreationAttr> {
     allowNull: false,
   })
   materialsId: number;
+
+    @HasMany(() => Rating)
+    ratings: Rating[]; 
 }
