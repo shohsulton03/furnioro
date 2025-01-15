@@ -13,11 +13,11 @@ export class ProductService {
   }
 
   async findAll() {
-    return this.productModel.findAll();
+    return this.productModel.findAll({ include: { all: true } });
   }
 
   async findOne(id: number) {
-    return this.productModel.findByPk(id);
+    return this.productModel.findByPk(id, { include: { all: true } });
   }
 
   async update(id: number, updateProductDto: UpdateProductDto) {
