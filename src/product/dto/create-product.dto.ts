@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsArray, IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { IsArray, IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
 
 export class CreateProductDto {
   @ApiProperty({
@@ -104,12 +104,31 @@ export class CreateProductDto {
     description: 'Mahsulotga tegishli chegirma ID-si',
   })
   @IsNumber()
+  @IsOptional()
   discountId: number;
 
   @ApiProperty({
-    example: 2,
-    description: 'Mahsulotga tegishli material ID-si',
+    example: 'Paxta',
+    description: 'Mahsulotning asosiy materiali uchun ID',
   })
-  @IsNumber()
-  materialsId: number;
+  @IsString()
+  @IsNotEmpty()
+  filling_material: string;
+
+  @ApiProperty({
+    example: 'Charm',
+    description: 'Mahsulotning qoplama materiali',
+  })
+  @IsString()
+  @IsNotEmpty()
+  upholstery_material: string;
+
+  @ApiProperty({
+    example: 'Plastmassa',
+    description: 'Mahsulotning ikkilamchi materiali (agar mavjud bo‘lsa)',
+  })
+  @IsString()
+  @IsOptional()
+  @IsNotEmpty()
+  secondary_material?: string;
 }

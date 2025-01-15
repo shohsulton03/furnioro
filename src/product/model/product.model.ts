@@ -1,5 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Column, DataType, Table, Model } from 'sequelize-typescript';
+import { Column, DataType, Table, Model, ForeignKey, BelongsTo } from 'sequelize-typescript';
+import { Material } from '../../material/models/material.model';
+import { Discount } from '../../discount/models/discount.model';
+import { Category } from '../../category/models/category.model';
 
 interface IProductCreationAttr {
   title: string;
@@ -16,7 +19,9 @@ interface IProductCreationAttr {
   garanty: number;
   colors: string[];
   discountId: number;
-  materialsId: number;
+  filling_material: string;
+  upholstery_material:string;
+  secondary_material:string
 }
 
 @Table({ tableName: 'product' })
@@ -119,11 +124,14 @@ export class Product extends Model<Product, IProductCreationAttr> {
     example: 3,
     description: 'Mahsulotga tegishli kategoriyaning ID-si',
   })
+  @ForeignKey(() => Category)
   @Column({
     type: DataType.INTEGER,
     allowNull: false,
   })
   categoryId: number;
+  @BelongsTo(() => Category)
+  category: Category;
 
   @ApiProperty({
     example: 10,
@@ -152,7 +160,6 @@ export class Product extends Model<Product, IProductCreationAttr> {
   })
   @Column({
     type: DataType.INTEGER,
-    allowNull: false,
     defaultValue: 0,
   })
   garanty: number;
@@ -171,18 +178,41 @@ export class Product extends Model<Product, IProductCreationAttr> {
     example: 5,
     description: 'Mahsulotga tegishli chegirma ID-si',
   })
+  @ForeignKey(() => Discount)
   @Column({
     type: DataType.INTEGER,
   })
-  discountId: number;
+  discountId?: number;
+  @BelongsTo(() => Discount)
+  discount: Discount;
 
   @ApiProperty({
-    example: 2,
-    description: 'Mahsulotga tegishli material ID-si',
+    example: 'Paxta',
+    description: 'Mahsulotning asosiy materiali uchun ID',
   })
   @Column({
-    type: DataType.INTEGER,
+    type: DataType.STRING,
     allowNull: false,
   })
-  materialsId: number;
+  filling_material: string;
+
+  @ApiProperty({
+    example: 'Charm',
+    description: 'Mahsulotning qoplama materiali',
+  })
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+  })
+  upholstery_material: string;
+
+  @ApiProperty({
+    example: 'Plastmassa',
+    description: 'Mahsulotning ikkilamchi materiali (agar mavjud bo‘lsa)',
+  })
+  @Column({
+    type: DataType.STRING,
+    allowNull: true,
+  })
+  secondary_material?: string;
 }
