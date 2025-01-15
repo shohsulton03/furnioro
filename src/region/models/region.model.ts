@@ -1,5 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { Column, DataType, HasMany, Model, Table } from "sequelize-typescript";
+import { City } from "src/city/models/city.model";
 
 interface IRegionAttr{
     name:string
@@ -28,5 +29,8 @@ export class Region extends Model<Region, IRegionAttr> {
     allowNull: false,
   })
   name: string;
+
+  @HasMany(() => City)
+  city: City[];
   
 }

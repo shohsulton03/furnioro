@@ -15,7 +15,7 @@ export class PaymentTypeService {
   }
 
   findAll() {
-    return this.paymentTypeModel.findAll();
+    return this.paymentTypeModel.findAll({ include: { all: true}});
   }
 
   findOne(id: number) {

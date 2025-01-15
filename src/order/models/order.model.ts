@@ -1,6 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { DATE } from 'sequelize';
-import { Column, DataType, Model, Table } from 'sequelize-typescript';
+import { Column, DataType, HasMany, Model, Table } from 'sequelize-typescript';
+import { OrderItem } from 'src/order-item/models/order-item.model';
+import { Payment } from 'src/payment/models/payment.model';
 
 export enum OrderStatus {
   Pending = 'Pending',
@@ -128,4 +130,10 @@ export class Order extends Model<Order, IOrderCreateinAttr> {
     values: Object.values(OrderStatus),
   })
   status: OrderStatus;
+
+  @HasMany(() => OrderItem)
+  orderItems: OrderItem[];
+
+  @HasMany(() => Payment)
+  payments: Payment[];
 }

@@ -7,6 +7,5 @@ export class CreatePaymentTypeDto {
     description: "to'lov turi yoziladi",
   })
   @IsString()
-  @IsNotEmpty()
   name: string;
 }
