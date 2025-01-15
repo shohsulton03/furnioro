@@ -1,5 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { Column, DataType, Model, Table } from "sequelize-typescript";
+import { Column, DataType, HasMany, Model, Table } from "sequelize-typescript";
+import { Product } from "src/product/model/product.model";
 
 interface IDiscountAttr {
     percent: number;
@@ -49,4 +50,7 @@ export class Discount extends Model<Discount, IDiscountAttr> {
         defaultValue: new Date(),
     })
     finishDate: Date;
+
+    @HasMany(() => Product)
+    products: Product[];
 }

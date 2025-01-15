@@ -1,5 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { Column, DataType, Table, Model, ForeignKey, BelongsTo } from "sequelize-typescript";
+import { Column, DataType, Table, Model, ForeignKey, BelongsTo, HasMany } from "sequelize-typescript";
+import { Order } from "src/order/models/order.model";
 import { Region } from "src/region/models/region.model";
 
 
@@ -21,7 +22,6 @@ export class City extends Model<City, ICityAttr> {
     })
     id: number;
     
-
     @ApiProperty({
         example: 1,
         description: 'City unique ID(autoIncrement)',
@@ -44,4 +44,7 @@ export class City extends Model<City, ICityAttr> {
 
     @BelongsTo(() => Region)
     region: Region;
+
+    @HasMany(() => Order)
+    orders: Order[];
 }
