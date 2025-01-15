@@ -1,8 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Column, DataType, Table, Model, ForeignKey, BelongsTo } from 'sequelize-typescript';
-import { Material } from '../../material/models/material.model';
+import { Column, DataType, Table, Model, ForeignKey, BelongsTo, HasMany } from 'sequelize-typescript';
 import { Discount } from '../../discount/models/discount.model';
 import { Category } from '../../category/models/category.model';
+import { Wishlist } from '../../wishlist/models/wishlist.model';
+import { OrderItem } from '../../order-item/models/order-item.model';
+import { CartItem } from 'src/cart_items/models/cart_item.model';
 
 interface IProductCreationAttr {
   title: string;
@@ -215,4 +217,13 @@ export class Product extends Model<Product, IProductCreationAttr> {
     allowNull: true,
   })
   secondary_material?: string;
+
+  @HasMany(() => Wishlist)
+  wishlist: Wishlist[];
+
+  @HasMany(() => OrderItem)
+  orderItem: OrderItem[];
+
+  @HasMany(() => CartItem)
+  cartItem: CartItem[];
 }

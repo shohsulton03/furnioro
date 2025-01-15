@@ -1,5 +1,7 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { Column, DataType, HasMany, Model, Table } from "sequelize-typescript";
+import { Cart } from "src/cart/models/cart.model";
+import { Wishlist } from "src/wishlist/models/wishlist.model";
 
 interface IUserCreationAttr {
   full_name: string;
@@ -72,4 +74,12 @@ export class User extends Model<User, IUserCreationAttr> {
     type: DataType.STRING,
   })
   hashed_refresh_token: string;
+
+
+
+  @HasMany(() => Wishlist)
+  wishlist: Wishlist[];
+
+  @HasMany(() => Cart)
+  cart: Cart[];
 }

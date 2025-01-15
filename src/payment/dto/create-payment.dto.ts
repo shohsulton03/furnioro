@@ -9,7 +9,6 @@ export class CreatePaymentDto {
         description: 'Payment order_id',
     })
     @IsNumber()
-    @IsNotEmpty()
     orderId: number;
 
     @ApiProperty({
@@ -17,7 +16,6 @@ export class CreatePaymentDto {
         description: 'Payment payment_type_id',
     })
     @IsNumber()
-    @IsNotEmpty()
     paymentTypeId: number;
 
     @ApiProperty({
@@ -25,14 +23,12 @@ export class CreatePaymentDto {
         description: 'Payment amount',
     })
     @IsNumber()
-    @IsNotEmpty()
     amount: number;
 
     @ApiProperty({
         example: 'pending',
         description: 'Payment status',
     })
-    @IsNotEmpty()
     @IsEnum(Payment_Status)
     status: Payment_Status;
 }

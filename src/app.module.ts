@@ -35,6 +35,12 @@ import { join } from 'node:path';
 import { CartItem } from './cart_items/models/cart_item.model';
 import { CartItemsModule } from './cart_items/cart_items.module';
 import { WishlistModule } from './wishlist/wishlist.module';
+import { RegionModule } from './region/region.module';
+import { Region } from './region/models/region.model';
+import { Material } from './material/models/material.model';
+import { MaterialModule } from './material/material.module';
+import { RatingModule } from './rating/rating.module';
+import { Rating } from './rating/models/rating.model';
 
 @Module({
   imports: [
@@ -64,7 +70,10 @@ import { WishlistModule } from './wishlist/wishlist.module';
         City,
         Wishlist,
         Image,
-        CartItem
+        CartItem,
+        Region,
+        Material,
+        Rating
       ],
       autoLoadModels: true,
       sync: { alter: true },
@@ -86,7 +95,10 @@ import { WishlistModule } from './wishlist/wishlist.module';
     ImagesModule,
     FileModule,
     CartItemsModule,
-    WishlistModule
+    WishlistModule,
+    RegionModule,
+    MaterialModule,
+    RatingModule
   ],
   controllers: [],
   providers: [],
