@@ -37,6 +37,10 @@ import { CartItemsModule } from './cart_items/cart_items.module';
 import { WishlistModule } from './wishlist/wishlist.module';
 import { RegionModule } from './region/region.module';
 import { Region } from './region/models/region.model';
+import { Material } from './material/models/material.model';
+import { MaterialModule } from './material/material.module';
+import { RatingModule } from './rating/rating.module';
+import { Rating } from './rating/models/rating.model';
 
 @Module({
   imports: [
@@ -67,7 +71,9 @@ import { Region } from './region/models/region.model';
         Wishlist,
         Image,
         CartItem,
-        Region
+        Region,
+        Material,
+        Rating
       ],
       autoLoadModels: true,
       sync: { alter: true },
@@ -90,7 +96,9 @@ import { Region } from './region/models/region.model';
     FileModule,
     CartItemsModule,
     WishlistModule,
-    RegionModule
+    RegionModule,
+    MaterialModule,
+    RatingModule
   ],
   controllers: [],
   providers: [],
