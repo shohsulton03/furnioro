@@ -8,7 +8,7 @@ import { Category } from './models/category.model';
 export class CategoryService {
   constructor(@InjectModel(Category) private categotyModel: typeof Category) {}
 
-  create(createCategoryDto: CreateCategoryDto) {
+  async create(createCategoryDto: CreateCategoryDto): Promise<Category> {
     return this.categotyModel.create(createCategoryDto);
   }
 

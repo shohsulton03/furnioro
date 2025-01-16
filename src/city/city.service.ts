@@ -1,17 +1,22 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { City } from './models/city.model';
 import { CreateCityDto } from './dto/create-city.dto';
 import { UpdateCityDto } from './dto/update-city.dto';
+import { RegionService } from 'src/region/region.service';
 
 @Injectable()
 export class CityService {
   constructor(
-    @InjectModel(City)
-    private readonly cityModel: typeof City,
+    @InjectModel(City) private readonly cityModel: typeof City,
+    private readonly regionService: RegionService
   ) {}
 
   async create(createCityDto: CreateCityDto): Promise<City> {
+    const region = await this.regionService.findOne(createCityDto.region_id);
+    if (!region) {
+      throw new BadRequestException(`Region with ID ${createCityDto.region_id} not found`);
+    }
     return await this.cityModel.create(createCityDto);
   }
 
