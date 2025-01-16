@@ -16,7 +16,7 @@ export class CartItemsService {
   }
 
   async findAll(): Promise<CartItem[]> {
-    return await this.cartItemModel.findAll();
+    return await this.cartItemModel.findAll({ include: { all: true } });
   }
 
   async findOne(id: number): Promise<CartItem> {

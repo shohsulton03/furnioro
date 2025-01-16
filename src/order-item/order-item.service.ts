@@ -16,7 +16,7 @@ export class OrderItemService {
   }
 
   async findAll(): Promise<OrderItem[]> {
-    return this.orderItemModel.findAll();
+    return this.orderItemModel.findAll({ include: { all: true } });
   }
 
   async findOne(id: number): Promise<OrderItem> {

@@ -16,7 +16,7 @@ export class CityService {
   }
 
   async findAll(): Promise<City[]> {
-    return await this.cityModel.findAll();
+    return await this.cityModel.findAll({ include: {all:true}});
   }
 
   async findOne(id: number): Promise<City> {
