@@ -3,14 +3,24 @@ import { CreatePaymentDto } from './dto/create-payment.dto';
 import { UpdatePaymentDto } from './dto/update-payment.dto';
 import { InjectModel } from '@nestjs/sequelize';
 import { Payment } from './models/payment.model';
+import { PaymentTypeService } from 'src/payment_type/payment_type.service';
+import { OrderService } from 'src/order/order.service';
 
 @Injectable()
 export class PaymentService {
   constructor(
-    @InjectModel(Payment)
-    private paymentModel: typeof Payment
+    @InjectModel(Payment) private paymentModel: typeof Payment,
+    private paymentTypeService: PaymentTypeService,
+    private orderService: OrderService
   ){}
-  create(createPaymentDto: CreatePaymentDto) {
+  async create(createPaymentDto: CreatePaymentDto): Promise<Payment> {
+    const paymentType = await this.paymentTypeService.findOne(createPaymentDto.paymentTypeId);
+    const order = await this.orderService.findOne(createPaymentDto.orderId);
+
+    if (!paymentType ||!order) {
+      throw new BadRequestException('Payment Type or Order not found');
+    }
+
     return this.paymentModel.create(createPaymentDto);
   }
 
@@ -39,11 +49,10 @@ export class PaymentService {
     const result = await this.paymentModel.destroy({ where: { id } });
   
     if (result === 0) {
-      throw new Error(`Payment with ID ${id} not found`);
+      throw new BadRequestException(`Payment with ID ${id} not found`);
     }
   
     return { message: 'Payment deleted successfully ✅' };
   }
-  
   
 }

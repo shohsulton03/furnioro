@@ -37,6 +37,7 @@ export class Payment extends Model<Payment, IPaymentAttr>{
     @ForeignKey(() => Order)
     @Column({
         type: DataType.INTEGER,
+        onDelete: "SET NULL"
     })
     orderId: number;
 

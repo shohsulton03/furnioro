@@ -59,7 +59,7 @@ export class PaymentController {
   }
 
   @ApiOperation({ summary: "Updated by id payment."})
-    @ApiResponse({
+  @ApiResponse({
       status:200,
       description: "delete one payment.",
       type: Payment
