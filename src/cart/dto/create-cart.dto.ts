@@ -9,6 +9,7 @@ export class CreateCartDto {
         example: 23,
         description: "ID of user"
     })
+    @IsNumber()
     user_id: number;
 
 }
