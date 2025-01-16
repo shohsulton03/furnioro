@@ -28,7 +28,7 @@ export class Payment extends Model<Payment, IPaymentAttr>{
         primaryKey: true ,
         autoIncrement: true
     })
-    id: string;
+    id: number;
 
     @ApiProperty({
         example: 1,

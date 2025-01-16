@@ -14,7 +14,7 @@ export class OrderService {
   }
 
   async findAll() {
-    return this.orderModel.findAll();
+    return this.orderModel.findAll({ include: {all: true}});
   }
 
   async findOne(id: number) {
@@ -29,7 +29,13 @@ export class OrderService {
     return updatedOrder[1][0];
   }
 
-  async remove(id: number) {
-    return this.orderModel.destroy({ where: { id } });
+  async remove(id: number): Promise<{ message: string }> {
+    const result = await this.orderModel.destroy({ where: { id } });
+  
+    if (result === 0) {
+      throw new Error(`Payment with ID ${id} not found`);
+    }
+  
+    return { message: 'Payment deleted successfully ✅' };
   }
 }

@@ -31,7 +31,7 @@ export class Cart extends Model<Cart, ICartAttr> {
         type: DataType.INTEGER,
         allowNull: false
     })
-    user_id: number
+    user_id: number;
 
     @ApiProperty({
         example: "2025-01-14T10:30:00.000Z",
