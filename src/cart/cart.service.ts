@@ -12,8 +12,8 @@ export class CartService {
   ){}
 
   async create(createCartDto: CreateCartDto): Promise<Cart> {
-    return await this.cartModel.create(createCartDto)
-    
+    const createdAt = new Date()
+    return await this.cartModel.create({...createCartDto, createdAt})
   }
 
   async findAll(): Promise<Cart[]> {
