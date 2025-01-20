@@ -1,9 +1,10 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Product } from './model/product.model';
+import { QueryFilterDto } from './dto/query-filter.dto';
 
 
 @ApiTags('Product')
@@ -22,15 +23,15 @@ export class ProductController {
     return this.productService.create(createProductDto);
   }
 
-  @ApiOperation({ summary: 'Get all data' })
+  @ApiOperation({ summary: 'Get all products with optional filters' })
   @ApiResponse({
     status: 200,
-    description: 'All product value',
+    description: 'Returns filtered and paginated product data',
     type: [Product],
   })
   @Get()
-  findAll() {
-    return this.productService.findAll();
+  findAll(@Query() query: QueryFilterDto) {
+    return this.productService.findAll(query);
   }
 
   @ApiOperation({ summary: 'Get one data by Id' })
