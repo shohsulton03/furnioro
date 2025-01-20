@@ -8,5 +8,6 @@ import { PaymentType } from './models/payment_type.model';
   imports:[SequelizeModule.forFeature([PaymentType])],
   controllers: [PaymentTypeController],
   providers: [PaymentTypeService],
+  exports: [PaymentTypeService],
 })
 export class PaymentTypeModule {}

@@ -9,7 +9,7 @@ export class DiscountService {
   constructor(
     @InjectModel(Discount) private readonly discountModel: typeof Discount,
   ) {}
-  create(createDiscountDto: CreateDiscountDto) {
+  async create(createDiscountDto: CreateDiscountDto): Promise<Discount> {
     return this.discountModel.create(createDiscountDto);
   }
 

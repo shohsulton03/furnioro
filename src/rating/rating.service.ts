@@ -3,12 +3,15 @@ import { CreateRatingDto } from './dto/create-rating.dto';
 import { UpdateRatingDto } from './dto/update-rating.dto';
 import { Rating } from './models/rating.model';
 import { InjectModel } from '@nestjs/sequelize';
+import { UserService } from 'src/user/user.service';
 
 @Injectable()
 export class RatingService {
   private readonly logger = new Logger(RatingService.name);
 
-  constructor(@InjectModel(Rating) private readonly ratingModel: typeof Rating) {}
+  constructor(
+    @InjectModel(Rating) private readonly ratingModel: typeof Rating,  
+  ) {}
 
   async create(createRatingDto: CreateRatingDto): Promise<Rating> {
     try {
