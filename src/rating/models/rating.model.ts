@@ -51,7 +51,7 @@ export class Rating extends Model<Rating, IRatingAttr> {
     type: DataType.DECIMAL,
     allowNull: false,
   })
-  raiting: number;
+  rating: number;
 
   @ApiProperty({
     example: 14,

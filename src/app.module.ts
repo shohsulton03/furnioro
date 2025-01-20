@@ -39,7 +39,7 @@ import { RegionModule } from './region/region.module';
 import { Region } from './region/models/region.model';
 import { Material } from './material/models/material.model';
 import { MaterialModule } from './material/material.module';
-import { RatingModule } from './rating/rating.module';
+import { RatingModule } from './rating/rating.module'; 
 import { Rating } from './rating/models/rating.model';
 
 @Module({

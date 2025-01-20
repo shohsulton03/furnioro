@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Column, DataType, Table, Model, HasMany, ForeignKey, BelongsTo } from 'sequelize-typescript';
 import { CartItem } from 'src/cart_items/models/cart_item.model';
 import { OrderItem } from 'src/order-item/models/order-item.model';
-import { Rating } from 'src/rating/models/rating.model';
+import { Rating } from '../../rating/models/rating.model';
 import { Discount } from '../../discount/models/discount.model';
 import { Category } from '../../category/models/category.model';
 import { Wishlist } from '../../wishlist/models/wishlist.model';

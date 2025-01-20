@@ -14,8 +14,8 @@ async function start() {
     app.setGlobalPrefix('api');
 
     const config = new DocumentBuilder()
-      .setTitle('Furnico')
-      .setDescription('Furnico RES API')
+      .setTitle('Furnioro')
+      .setDescription('Furnioro RES API')
       .setVersion('1.0')
       .addTag(
         'NESTJS, Validation, swagger, guard, pg, mailer, sms, cookie, ...',
