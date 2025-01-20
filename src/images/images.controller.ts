@@ -6,7 +6,7 @@ import {
   Patch,
   Param,
   Delete,
-  UploadedFile,
+  UploadedFiles,
   UseInterceptors,
 } from '@nestjs/common';
 import { ImagesService } from './images.service';
@@ -14,23 +14,26 @@ import { CreateImageDto } from './dto/create-image.dto';
 import { UpdateImageDto } from './dto/update-image.dto';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Image } from './models/image.model';
-import { FileInterceptor } from '@nestjs/platform-express';
+import { FilesInterceptor } from '@nestjs/platform-express';
 
 @ApiTags('Images')
 @Controller('images')
 export class ImagesController {
   constructor(private readonly imagesService: ImagesService) {}
 
-  @ApiOperation({ summary: 'Add new image' })
+  @ApiOperation({ summary: 'Add new images' })
   @ApiResponse({
     status: 201,
     description: 'Added',
-    type: Image,
+    type: [Image],
   })
-  @UseInterceptors(FileInterceptor('image'))
+  @UseInterceptors(FilesInterceptor('images', 10)) // 10 ta fayl yuklash uchun limit
   @Post()
-  create(@Body() createImageDto: CreateImageDto, @UploadedFile() image: any) {
-    return this.imagesService.create(createImageDto, image);
+  create(
+    @Body() createImageDto: CreateImageDto,
+    @UploadedFiles() images: Array<any>,
+  ) {
+    return this.imagesService.create(createImageDto, images);
   }
 
   @ApiOperation({ summary: 'Get all data' })
@@ -55,26 +58,26 @@ export class ImagesController {
     return this.imagesService.findOne(+id);
   }
 
-  @ApiOperation({ summary: 'Update one data by Id' })
+  @ApiOperation({ summary: 'Update images by Id' })
   @ApiResponse({
     status: 200,
-    description: 'Update by Id',
-    type: Image,
+    description: 'Updated by Id',
+    type: [Image],
   })
-  @UseInterceptors(FileInterceptor('image'))
+  @UseInterceptors(FilesInterceptor('images', 10)) // 10 ta fayl uchun
   @Patch(':id')
   update(
     @Param('id') id: string,
     @Body() updateImageDto: UpdateImageDto,
-    @UploadedFile() image: any,
+    @UploadedFiles() images: Array<any>,
   ) {
-    return this.imagesService.update(+id, updateImageDto, image);
+    return this.imagesService.update(+id, updateImageDto, images);
   }
 
   @ApiOperation({ summary: 'Delete one data by Id' })
   @ApiResponse({
     status: 200,
-    description: 'Delete by Id',
+    description: 'Deleted by Id',
     type: Number,
   })
   @Delete(':id')

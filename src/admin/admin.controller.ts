@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, HttpCode, HttpStatus } from '@nestjs/common';
 import { AdminService } from './admin.service';
 import { CreateAdminDto } from './dto/create-admin.dto';
 import { UpdateAdminDto } from './dto/update-admin.dto';
@@ -14,7 +14,7 @@ import { AdminSelfForUpdateGuard } from '../common/guards/admin-self-for-update.
 @UseGuards(AdminGuard)
 export class AdminController {
   constructor(private readonly adminService: AdminService) {}
-
+  
   @ApiOperation({ summary: 'Add new admin' })
   @ApiResponse({
     status: 201,
@@ -22,6 +22,10 @@ export class AdminController {
     type: Admin,
   })
   @UseGuards(AdminCreatorGuard)
+<<<<<<< HEAD
+=======
+  @HttpCode(HttpStatus.CREATED)
+>>>>>>> cfe73f3f4893fd88031a288029e943abd9306d4b
   @Post()
   create(@Body() createAdminDto: CreateAdminDto) {
     return this.adminService.create(createAdminDto);
@@ -34,6 +38,10 @@ export class AdminController {
     type: [Admin],
   })
   @UseGuards(AdminCreatorGuard)
+<<<<<<< HEAD
+=======
+  @HttpCode(HttpStatus.OK)
+>>>>>>> cfe73f3f4893fd88031a288029e943abd9306d4b
   @Get()
   findAll() {
     return this.adminService.findAll();
@@ -46,6 +54,10 @@ export class AdminController {
     type: Admin,
   })
   @UseGuards(AdminSelfGuard)
+<<<<<<< HEAD
+=======
+  @HttpCode(HttpStatus.OK)
+>>>>>>> cfe73f3f4893fd88031a288029e943abd9306d4b
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.adminService.findOne(+id);
@@ -57,7 +69,12 @@ export class AdminController {
     description: 'Update by Id',
     type: Admin,
   })
+<<<<<<< HEAD
   @UseGuards(AdminSelfForUpdateGuard)
+=======
+  @UseGuards(AdminCreatorGuard)
+  @HttpCode(HttpStatus.OK)
+>>>>>>> cfe73f3f4893fd88031a288029e943abd9306d4b
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateAdminDto: UpdateAdminDto) {
     return this.adminService.update(+id, updateAdminDto);
@@ -70,6 +87,10 @@ export class AdminController {
     type: Number,
   })
   @UseGuards(AdminCreatorGuard)
+<<<<<<< HEAD
+=======
+  @HttpCode(HttpStatus.OK)
+>>>>>>> cfe73f3f4893fd88031a288029e943abd9306d4b
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.adminService.remove(+id);

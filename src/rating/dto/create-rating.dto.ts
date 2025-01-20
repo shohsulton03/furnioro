@@ -24,7 +24,7 @@ export class CreateRatingDto {
   })
   @IsNumber()
   @IsNotEmpty()
-  raiting: number;
+  rating: number;
 
   @ApiProperty({
     example: 1,
