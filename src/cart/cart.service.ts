@@ -18,7 +18,6 @@ export class CartService {
     if (!user) {
       throw new BadRequestException(`User with ID ${createCartDto.user_id} not found`);
     }
-    return await this.cartModel.create(createCartDto)
     const createdAt = new Date()
     return await this.cartModel.create({...createCartDto, createdAt})
   }
