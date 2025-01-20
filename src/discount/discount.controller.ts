@@ -18,7 +18,7 @@ export class DiscountController {
     description: "One Discount.",
     type: [Discount]
   })
-  // @UseGuards(AdminGuard)
+  @UseGuards(AdminGuard)
   @HttpCode(200)
   @Post()
   create(@Body() createDiscountDto: CreateDiscountDto) {
