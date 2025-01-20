@@ -25,7 +25,7 @@ export class CartController {
 
   @ApiOperation({ summary: 'Get list of carts' })
   @ApiResponse({ status: 200, description: 'List of all carts.', type: [Cart] })
-  @UseGuards(AdminGuard, AdminCreatorGuard)
+  @UseGuards(AdminGuard)
   @HttpCode(HttpStatus.OK)
   @Get()
   findAll() {
