@@ -1,4 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { Column, DataType, Table, Model, HasMany } from 'sequelize-typescript';
+import { Rating } from 'src/rating/models/rating.model';
 import { Column, DataType, Table, Model, HasMany, ForeignKey, BelongsTo } from 'sequelize-typescript';
 import { CartItem } from 'src/cart_items/models/cart_item.model';
 import { OrderItem } from 'src/order-item/models/order-item.model';
@@ -207,6 +209,11 @@ export class Product extends Model<Product, IProductCreationAttr> {
     type: DataType.STRING,
     allowNull: false,
   })
+  materialsId: number;
+
+    @HasMany(() => Rating)
+    ratings: Rating[]; 
+
   upholstery_material: string;
 
   @ApiProperty({
