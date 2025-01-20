@@ -15,7 +15,7 @@ export class CartItemsController {
   @ApiOperation({ summary: 'Create a new cart item' })
   @ApiResponse({ status: 201, description: 'Cart item created successfully.' })
   @ApiResponse({ status: 400, description: 'Invalid input data.' })
-  @UseGuards(UserGuard) 
+  @UseGuards(UserGuard)
   @HttpCode(HttpStatus.CREATED)
   @Post()
   create(@Body() createCartItemDto: CreateCartItemDto) {

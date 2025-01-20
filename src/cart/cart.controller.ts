@@ -25,7 +25,7 @@ export class CartController {
 
   @ApiOperation({ summary: 'Get list of carts' })
   @ApiResponse({ status: 200, description: 'List of all carts.', type: [Cart] })
-  @UseGuards(AdminGuard, AdminCreatorGuard)
+  @UseGuards(AdminGuard)
   @HttpCode(HttpStatus.OK)
   @Get()
   findAll() {
@@ -35,7 +35,7 @@ export class CartController {
   @ApiOperation({ summary: 'Get a cart by ID' })
   @ApiResponse({ status: 200, description: 'Cart data.', type: Cart })
   @ApiResponse({ status: 404, description: 'Cart not found.' })
-  @UseGuards(UserSelfForUpdateGuard)
+  @UseGuards(UserSelfGuard)
   @HttpCode(HttpStatus.OK)
   @Get(':id')
   findOne(@Param('id') id: string) {
@@ -44,7 +44,7 @@ export class CartController {
 
   @ApiOperation({ summary: 'Update a Cart by ID' })
   @ApiResponse({ status: 202, description: 'Cart successfully updated.', type: Cart })
-  @UseGuards(AdminGuard, UserSelfGuard, AdminCreatorGuard) 
+  @UseGuards(UserSelfForUpdateGuard) 
   @HttpCode(HttpStatus.ACCEPTED)
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateCartDto: UpdateCartDto) {
