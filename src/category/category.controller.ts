@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   UseGuards,
+  HttpCode,
 } from '@nestjs/common';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
@@ -26,7 +27,8 @@ export class CategoryController {
     description: 'Added',
     type: Category,
   })
-  // @UseGuards(AdminGuard)
+  @UseGuards(AdminGuard)
+  @HttpCode(200)
   @Post()
   create(@Body() createCategoryDto: CreateCategoryDto) {
     return this.categoryService.create(createCategoryDto);
@@ -53,14 +55,15 @@ export class CategoryController {
   findOne(@Param('id') id: string) {
     return this.categoryService.findOne(+id);
   }
-
+  
   @ApiOperation({ summary: 'Update one data by Id' })
   @ApiResponse({
     status: 200,
     description: 'Update by Id',
     type: Category,
   })
-  // @UseGuards(AdminGuard)
+  @UseGuards(AdminGuard)
+  @HttpCode(200)
   @Patch(':id')
   update(
     @Param('id') id: string,
@@ -75,7 +78,8 @@ export class CategoryController {
     description: 'Delete by Id',
     type: Number,
   })
-  // @UseGuards(AdminGuard)
+  @UseGuards(AdminGuard)
+  @HttpCode(200)
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.categoryService.remove(+id);

@@ -32,6 +32,7 @@ export class Rating extends Model<Rating, IRatingAttr> {
   })
   user_id: number;
 
+  @ForeignKey(()=>Product)
   @ApiProperty({
     example: 12,
     description: 'Product ID',
@@ -51,7 +52,7 @@ export class Rating extends Model<Rating, IRatingAttr> {
     type: DataType.DECIMAL,
     allowNull: false,
   })
-  raiting: number;
+  rating: number;
 
   @ApiProperty({
     example: 14,
@@ -65,8 +66,7 @@ export class Rating extends Model<Rating, IRatingAttr> {
 
   @BelongsTo(() => User)
   user: User;
-
+  
   @BelongsTo(() => Product)
   product: Product;
-  
 }

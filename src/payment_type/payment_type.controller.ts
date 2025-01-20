@@ -16,7 +16,7 @@ export class PaymentTypeController {
     description: 'Added',
     type: PaymentType,
   })
-  // @UseGuards(AdminGuard)
+  @UseGuards(AdminGuard)
   @Post()
   create(@Body() createPaymentTypeDto: CreatePaymentTypeDto) {
     return this.paymentTypeService.create(createPaymentTypeDto);
@@ -28,6 +28,8 @@ export class PaymentTypeController {
     description: 'All payment type value',
     type: [PaymentType],
   })
+  
+  @UseGuards(AdminGuard)
   @Get()
   findAll() {
     return this.paymentTypeService.findAll();
@@ -50,7 +52,7 @@ export class PaymentTypeController {
     description: 'Update by Id',
     type: PaymentType,
   })
-  // @UseGuards(AdminGuard)
+  @UseGuards(AdminGuard)
   @Patch(':id')
   update(
     @Param('id') id: string,
@@ -65,7 +67,7 @@ export class PaymentTypeController {
     description: 'Delete by Id',
     type: Number,
   })
-  // @UseGuards(AdminGuard)
+  @UseGuards(AdminGuard)
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.paymentTypeService.remove(+id);

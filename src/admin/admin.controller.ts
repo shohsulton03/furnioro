@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, HttpCode, HttpStatus } from '@nestjs/common';
 import { AdminService } from './admin.service';
 import { CreateAdminDto } from './dto/create-admin.dto';
 import { UpdateAdminDto } from './dto/update-admin.dto';
@@ -11,17 +11,17 @@ import { AdminSelfForUpdateGuard } from '../common/guards/admin-self-for-update.
 
 @ApiTags('Admin')
 @Controller('admin')
-// @UseGuards(AdminGuard)
+@UseGuards(AdminGuard)
 export class AdminController {
   constructor(private readonly adminService: AdminService) {}
-
+  
   @ApiOperation({ summary: 'Add new admin' })
   @ApiResponse({
     status: 201,
     description: 'Added',
     type: Admin,
   })
-  // @UseGuards(AdminCreatorGuard)
+  @UseGuards(AdminCreatorGuard)
   @Post()
   create(@Body() createAdminDto: CreateAdminDto) {
     return this.adminService.create(createAdminDto);
@@ -33,7 +33,7 @@ export class AdminController {
     description: 'All admin value',
     type: [Admin],
   })
-  // @UseGuards(AdminCreatorGuard)
+  @UseGuards(AdminCreatorGuard)
   @Get()
   findAll() {
     return this.adminService.findAll();
@@ -45,7 +45,7 @@ export class AdminController {
     description: 'Get one by Id',
     type: Admin,
   })
-  // @UseGuards(AdminSelfGuard)
+  @UseGuards(AdminSelfGuard)
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.adminService.findOne(+id);
@@ -57,7 +57,7 @@ export class AdminController {
     description: 'Update by Id',
     type: Admin,
   })
-  // @UseGuards(AdminSelfForUpdateGuard)
+  @UseGuards(AdminSelfForUpdateGuard)
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateAdminDto: UpdateAdminDto) {
     return this.adminService.update(+id, updateAdminDto);
@@ -69,7 +69,7 @@ export class AdminController {
     description: 'Delete by Id',
     type: Number,
   })
-  // @UseGuards(AdminCreatorGuard)
+  @UseGuards(AdminCreatorGuard)
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.adminService.remove(+id);

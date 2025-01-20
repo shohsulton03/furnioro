@@ -1,7 +1,7 @@
 import { Injectable, HttpException, HttpStatus, Logger } from '@nestjs/common';
 import { CreateRatingDto } from './dto/create-rating.dto';
 import { UpdateRatingDto } from './dto/update-rating.dto';
-import { Rating } from './models/rating.model';
+import { Rating } from './models/rating.model'; 
 import { InjectModel } from '@nestjs/sequelize';
 import { UserService } from 'src/user/user.service';
 
@@ -96,6 +96,40 @@ export class RatingService {
       throw error instanceof HttpException
         ? error
         : new HttpException('Failed to delete rating', HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+  //---------------------------Average Rating calculate-----------------------------  
+  async calculateProductRating(productId: number): Promise<{ productId: number; averageRating: number }> {
+  try {
+    // Step 1: Fetch ratings for the given product
+    const ratings = await this.ratingModel.findAll({
+      where: { product_id: productId },
+      attributes: ['rating'], // Fetch the correct field 'rating'
+    });
+
+    // Step 2: Check if ratings exist for the product
+    if (!ratings.length) {
+      this.logger.warn(`No ratings found for product with ID ${productId}`);
+      throw new HttpException(
+        `No ratings found for product with ID ${productId}`,
+        HttpStatus.NOT_FOUND,
+      );
+    }
+
+    // Step 3: Calculate total and average ratings
+    const totalRatings = ratings.reduce((sum, { rating }) => sum + parseFloat(rating.toString()), 0);
+    const averageRating = parseFloat((totalRatings / ratings.length).toFixed(1));
+
+    // Step 4: Log and return the calculated rating
+    this.logger.log(`Calculated average rating for product with ID ${productId}: ${averageRating}`);
+    return { productId, averageRating };
+  } catch (error) {
+    this.logger.error(`Failed to calculate rating for product with ID ${productId}: ${error.message}`);
+    throw new HttpException(
+      'Failed to calculate product rating',
+      HttpStatus.INTERNAL_SERVER_ERROR,
+      );
     }
   }
 }

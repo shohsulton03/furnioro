@@ -6,7 +6,6 @@ import {
   Patch,
   Param,
   Delete,
-  // UseGuards,
   HttpStatus,
   HttpException,
   Logger,
@@ -14,9 +13,8 @@ import {
 import { RatingService } from './rating.service';
 import { CreateRatingDto } from './dto/create-rating.dto';
 import { UpdateRatingDto } from './dto/update-rating.dto';
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Rating } from './models/rating.model';
-import { log } from 'console';
 
 @ApiTags('Ratings')
 @Controller('rating')
@@ -245,6 +243,22 @@ export class RatingController {
         },
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
+    }
+  }
+  // ---------------Rating--------------- 
+  @Get('average/:productId')
+  @ApiOperation({ summary: 'Calculate average rating for a product' })
+  @ApiParam({
+    name: 'productId',
+    type: Number,
+    description: 'ID of the product',
+    example: 1,
+  })
+  async calculateAverageRating(@Param('productId') productId: number) {
+    try {
+      return await this.ratingService.calculateProductRating(productId);
+    } catch (error) {
+      throw new HttpException(error.message, error.status || HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 }
