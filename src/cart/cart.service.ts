@@ -3,7 +3,6 @@ import { CreateCartDto } from './dto/create-cart.dto';
 import { UpdateCartDto } from './dto/update-cart.dto';
 import { InjectModel } from '@nestjs/sequelize';
 import { Cart } from './models/cart.model';
-import { User } from 'src/user/models/user.model';
 import { UserService } from 'src/user/user.service';
 
 @Injectable()

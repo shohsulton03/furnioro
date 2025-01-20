@@ -21,7 +21,6 @@ export class OrderItemService {
     if( !product || !order){
       throw new BadRequestException('Product or Order not found');
     }
-    
     return this.orderItemModel.create(createOrderItemDto);
   }
 
