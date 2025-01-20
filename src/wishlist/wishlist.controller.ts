@@ -6,12 +6,14 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { WishlistService } from './wishlist.service';
 import { CreateWishlistDto } from './dto/create-wishlist.dto';
 import { UpdateWishlistDto } from './dto/update-wishlist.dto';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { Wishlist } from './models/wishlist.model';
+import { AdminGuard } from '../common/guards/admin.guard';
 
 @Controller('wishlist')
 export class WishlistController {
@@ -23,7 +25,7 @@ export class WishlistController {
     description: 'Added',
     type: Wishlist,
   })
-  // @UseGuards(AdminGuard)
+  @UseGuards(AdminGuard)
   @Post()
   create(@Body() createWishlistDto: CreateWishlistDto) {
     return this.wishlistService.create(createWishlistDto);
@@ -35,7 +37,6 @@ export class WishlistController {
     description: 'Get all',
     type: Wishlist,
   })
-  // @UseGuards(AdminGuard)
   @Get()
   findAll() {
     return this.wishlistService.findAll();
@@ -47,7 +48,6 @@ export class WishlistController {
     description: 'Get by Id',
     type: Wishlist,
   })
-  // @UseGuards(AdminGuard)
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.wishlistService.findOne(+id);
@@ -59,7 +59,7 @@ export class WishlistController {
     description: 'Update by Id',
     type: Wishlist,
   })
-  // @UseGuards(AdminGuard)
+  @UseGuards(AdminGuard)  
   @Patch(':id')
   update(
     @Param('id') id: string,
@@ -74,7 +74,7 @@ export class WishlistController {
     description: 'Delete by Id',
     type: Wishlist,
   })
-  // @UseGuards(AdminGuard)
+  @UseGuards(AdminGuard)
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.wishlistService.remove(+id);

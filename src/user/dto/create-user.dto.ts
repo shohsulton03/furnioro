@@ -21,7 +21,7 @@ export class CreateUserDto {
     example: 'qwerty12345',
     description: 'User password',
   })
-  @IsString()
+  @IsString() 
   @IsNotEmpty()
   password: string;
 

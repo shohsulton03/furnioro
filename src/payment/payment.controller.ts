@@ -1,9 +1,10 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode, UseGuards } from '@nestjs/common';
 import { PaymentService } from './payment.service';
 import { CreatePaymentDto } from './dto/create-payment.dto';
 import { UpdatePaymentDto } from './dto/update-payment.dto';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Payment } from './models/payment.model';
+import { AdminGuard } from '../common/guards/admin.guard';
 
 @ApiTags("payment")
 @Controller('payment')
@@ -65,6 +66,7 @@ export class PaymentController {
       type: Payment
   })
   @HttpCode(200)
+  @UseGuards(AdminGuard)
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.paymentService.remove(+id);

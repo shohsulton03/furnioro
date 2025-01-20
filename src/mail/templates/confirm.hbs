@@ -1,6 +1,69 @@
-<h1>Salom {{full_name}}</h1>
-<h2>Siznung tastiqlash codingiz</h2>
-
-<h3>
-    {{OTP}}
-</h3>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tasdiqlash Kodi</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      margin: 0;
+      padding: 0;
+    }
+    .email-container {
+      max-width: 600px;
+      margin: 30px auto;
+      background: #ffffff;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      border: 1px solid #e0e0e0;
+    }
+    .email-header {
+      background: #4CAF50;
+      color: #ffffff;
+      text-align: center;
+      padding: 20px;
+    }
+    .email-header img {
+      width: 100%; /* Rasmning kengligi oshirildi */
+      height: 100%;
+      margin-bottom: 10px;
+    }
+    .email-content {
+      padding: 20px;
+      text-align: center;
+    }
+    .otp-code {
+      font-size: 24px;
+      color: #4CAF50;
+      font-weight: bold;
+      margin: 20px 0;
+    }
+    .footer {
+      background: #f1f1f1;
+      color: #777;
+      text-align: center;
+      padding: 10px;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+  <div class="email-container">
+    <div class="email-header">
+      <img src="https://www.reg.ru/blog/media/2019/11/EDO.png" alt="Company Logo">
+      <h1>Salom, {{full_name}}</h1>
+    </div>
+    <div class="email-content">
+      <h2>Sizning tasdiqlash kodingiz:</h2>
+      <div class="otp-code">{{OTP}}</div>
+      <p>Iltimos, ushbu kodni 5 daqiqa ichida tasdiqlash uchun kiriting.</p>
+    </div>
+    <div class="footer">
+      © 2025 Sizning Kompaniyangiz. Barcha huquqlar himoyalangan.
+    </div>
+  </div>
+</body>
+</html>

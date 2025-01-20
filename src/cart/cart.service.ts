@@ -18,9 +18,9 @@ export class CartService {
     if (!user) {
       throw new BadRequestException(`User with ID ${createCartDto.user_id} not found`);
     }
-    return await this.cartModel.create(createCartDto)
-    const createdAt = new Date()
-    return await this.cartModel.create({...createCartDto, createdAt})
+    // return await this.cartModel.create(createCartDto)
+    // const createdAt = new Date()
+    return await this.cartModel.create({...createCartDto})
   }
 
   async findAll(): Promise<Cart[]> {
@@ -36,8 +36,13 @@ export class CartService {
   }
 
   async update(id: number, updateCartDto: UpdateCartDto): Promise<Cart> {
+    const user = await this.userService.findOne(updateCartDto.user_id);
+    if (!user) {
+      throw new BadRequestException(`User with ID ${updateCartDto.user_id} not found`);
+    }
     const cart = await this.findOne(id);
     await cart.update(updateCartDto);
+    await cart.save();
     return cart;
   }
 

@@ -6,12 +6,14 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { MaterialService } from './material.service';
 import { CreateMaterialDto } from './dto/create-material.dto';
 import { UpdateMaterialDto } from './dto/update-material.dto';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { Material } from './models/material.model';
+import { AdminGuard } from '../common/guards/admin.guard';
 
 @Controller('material')
 export class MaterialController {
@@ -23,7 +25,7 @@ export class MaterialController {
     description: 'Added',
     type: Material,
   })
-  // @UseGuards(AdminGuard)
+  @UseGuards(AdminGuard)
   @Post()
   create(@Body() createMaterialDto: CreateMaterialDto) {
     return this.materialService.create(createMaterialDto);
@@ -57,7 +59,7 @@ export class MaterialController {
     description: 'Update by Id',
     type: Material,
   })
-  // @UseGuards(AdminGuard)
+  @UseGuards(AdminGuard)
   @Patch(':id')
   update(
     @Param('id') id: string,
@@ -72,7 +74,7 @@ export class MaterialController {
     description: 'Delete by Id',
     type: Material,
   })
-  // @UseGuards(AdminGuard)
+  @UseGuards(AdminGuard)
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.materialService.remove(+id);

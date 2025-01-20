@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, HttpCode } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -19,6 +19,8 @@ export class UserController {
     description: 'Added',
     type: User,
   })
+  @UseGuards(AdminGuard)
+  @HttpCode(200)
   @Post()
   create(@Body() createUserDto: CreateUserDto) {
     return this.userService.create(createUserDto);
@@ -30,7 +32,7 @@ export class UserController {
     description: 'All user value',
     type: [User],
   })
-  // @UseGuards(AdminGuard)
+  @UseGuards(AdminGuard)
   @Get()
   findAll() {
     return this.userService.findAll();
@@ -42,8 +44,8 @@ export class UserController {
     description: 'Get one by Id',
     type: User,
   })
-  // @UseGuards(UserSelfGuard)
-  // @UseGuards(UserGuard)
+  @UseGuards(UserSelfGuard)
+  @UseGuards(UserGuard)
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.userService.findOne(+id);
@@ -55,8 +57,8 @@ export class UserController {
     description: 'Update by Id',
     type: User,
   })
-  // @UseGuards(UserSelfForUpdateGuard)
-  // @UseGuards(UserGuard)
+  @UseGuards(UserSelfForUpdateGuard)
+  @UseGuards(UserGuard)
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     return this.userService.update(+id, updateUserDto);
@@ -68,7 +70,7 @@ export class UserController {
     description: 'Delete by Id',
     type: Number,
   })
-  // @UseGuards(AdminGuard)
+  @UseGuards(AdminGuard)
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.userService.remove(+id);
