@@ -3,13 +3,25 @@ import { CreateWishlistDto } from './dto/create-wishlist.dto';
 import { UpdateWishlistDto } from './dto/update-wishlist.dto';
 import { InjectModel } from '@nestjs/sequelize';
 import { Wishlist } from './models/wishlist.model';
+import { ProductService } from 'src/product/product.service';
+import { UserService } from 'src/user/user.service';
 
 @Injectable()
 export class WishlistService {
 
-  constructor(@InjectModel(Wishlist) private wishlistModel: typeof Wishlist) {}
+  constructor(
+    @InjectModel(Wishlist) private wishlistModel: typeof Wishlist,
+    private productService: ProductService,
+    private userService: UserService,
+  ) {}
 
-  create(createWishlistDto: CreateWishlistDto) {
+  async create(createWishlistDto: CreateWishlistDto): Promise<Wishlist> {
+    const product = await this.productService.findOne(createWishlistDto.product_id);
+    const user = await this.userService.findOne(createWishlistDto.user_id);
+    
+    if (!product ||!user) {
+      throw new Error('Product or user not found');
+    }
     return this.wishlistModel.create(createWishlistDto);
   }
 

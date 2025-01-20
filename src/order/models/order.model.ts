@@ -1,6 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { DATE } from 'sequelize';
-import { Column, DataType, Model, Table } from 'sequelize-typescript';
+import { BelongsTo, Column, DataType, ForeignKey, HasMany, Model, Table } from 'sequelize-typescript';
+import { City } from 'src/city/models/city.model';
+import { OrderItem } from 'src/order-item/models/order-item.model';
+import { Payment } from 'src/payment/models/payment.model';
+import { Region } from 'src/region/models/region.model';
+import { User } from 'src/user/models/user.model';
 
 export enum OrderStatus {
   Pending = 'Pending',
@@ -40,6 +45,7 @@ export class Order extends Model<Order, IOrderCreateinAttr> {
     example: 1,
     description: 'User ID for the order',
   })
+  @ForeignKey(() => User)
   @Column({
     type: DataType.INTEGER,
     allowNull: false,
@@ -60,6 +66,7 @@ export class Order extends Model<Order, IOrderCreateinAttr> {
     example: 1,
     description: 'Region ID',
   })
+  @ForeignKey(() => Region)
   @Column({
     type: DataType.INTEGER,
   })
@@ -69,6 +76,7 @@ export class Order extends Model<Order, IOrderCreateinAttr> {
     example: 1,
     description: 'City ID',
   })
+  @ForeignKey(() => City)
   @Column({
     type: DataType.INTEGER,
   })
@@ -128,4 +136,19 @@ export class Order extends Model<Order, IOrderCreateinAttr> {
     values: Object.values(OrderStatus),
   })
   status: OrderStatus;
+
+  @HasMany(() => OrderItem)
+  orderItems: OrderItem[];
+
+  @HasMany(() => Payment)
+  payments: Payment[];
+
+  @BelongsTo(() => User)
+  user: User;
+
+  @BelongsTo(() => Region)
+  region: Region;
+
+  @BelongsTo(() => City)
+  city: City;
 }

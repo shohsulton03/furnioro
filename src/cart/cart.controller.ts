@@ -18,7 +18,7 @@ export class CartController {
   @ApiOperation({ summary: 'Create a new cart' })
   @ApiResponse({ status: 201, description: 'Cart successfully created.' })
   @UseGuards(UserGuard)
-  @HttpCode(HttpStatus.CREATED)
+  @HttpCode(HttpStatus.CREATED) 
   @Post()
   create(@Body() createCartDto: CreateCartDto) {
     return this.cartService.create(createCartDto);
@@ -32,7 +32,7 @@ export class CartController {
   findAll() {
     return this.cartService.findAll();
   }
-
+  
   @ApiOperation({ summary: 'Get a cart by ID' })
   @ApiResponse({ status: 200, description: 'Cart data.', type: Cart })
   @ApiResponse({ status: 404, description: 'Cart not found.' })

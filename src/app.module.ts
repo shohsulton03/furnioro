@@ -35,9 +35,11 @@ import { join } from 'node:path';
 import { CartItem } from './cart_items/models/cart_item.model';
 import { CartItemsModule } from './cart_items/cart_items.module';
 import { WishlistModule } from './wishlist/wishlist.module';
+import { RegionModule } from './region/region.module';
+import { Region } from './region/models/region.model';
 import { Material } from './material/models/material.model';
 import { MaterialModule } from './material/material.module';
-import { RatingModule } from './rating/rating.module';
+import { RatingModule } from './rating/rating.module'; 
 import { Rating } from './rating/models/rating.model';
 
 @Module({
@@ -69,6 +71,7 @@ import { Rating } from './rating/models/rating.model';
         Wishlist,
         Image,
         CartItem,
+        Region,
         Material,
         Rating
       ],
@@ -93,6 +96,7 @@ import { Rating } from './rating/models/rating.model';
     FileModule,
     CartItemsModule,
     WishlistModule,
+    RegionModule,
     MaterialModule,
     RatingModule
   ],

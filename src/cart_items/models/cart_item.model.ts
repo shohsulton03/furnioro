@@ -1,5 +1,7 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { Column, DataType, Model, Table } from "sequelize-typescript";
+import { BelongsTo, Column, DataType, ForeignKey, Model, Table } from "sequelize-typescript";
+import { Cart } from "src/cart/models/cart.model";
+import { Product } from "src/product/model/product.model";
 
 interface ICartItemAttr {
   cart_id: number;
@@ -24,6 +26,7 @@ export class CartItem extends Model<CartItem, ICartItemAttr> {
     example: 23,
     description: 'Cart ID raqami',
   })
+  @ForeignKey(() => Cart)
   @Column({
     type: DataType.INTEGER,
     allowNull: false,
@@ -34,6 +37,7 @@ export class CartItem extends Model<CartItem, ICartItemAttr> {
     example: 45,
     description: 'Mahsulotning ID raqami',
   })
+  @ForeignKey(() => Product)
   @Column({
     type: DataType.INTEGER,
     allowNull: false,
@@ -49,4 +53,11 @@ export class CartItem extends Model<CartItem, ICartItemAttr> {
     allowNull: false,
   })
   quantity: number;
+
+
+  @BelongsTo(() => Product)
+  product: Product;
+
+  @BelongsTo(() => Cart)
+  cart: Cart;
 }

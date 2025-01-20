@@ -1,5 +1,7 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { Column, DataType, Table, Model } from 'sequelize-typescript';
+import { Column, DataType, Table, Model, ForeignKey, BelongsTo, HasMany } from 'sequelize-typescript';
+import { CartItem } from "src/cart_items/models/cart_item.model";
+import { User } from "src/user/models/user.model";
 
 
 interface ICartAttr {
@@ -10,15 +12,26 @@ interface ICartAttr {
 @Table({ tableName: 'cart' })
 export class Cart extends Model<Cart, ICartAttr> {
     @ApiProperty({
-        example: 23,
-        description: "ID of user"
+        example: 1,
+        description: 'Cart id',
     })
     @Column({
-        type: DataType.INTEGER,
-        autoIncrement: true,
-        primaryKey: true,
+      type: DataType.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
     })
-    user_id: number
+    id: number;
+
+    @ApiProperty({
+        example: 1,
+        description: "ID of user"
+    })
+    @ForeignKey(() => User)
+    @Column({
+        type: DataType.INTEGER,
+        allowNull: false
+    })
+    user_id: number;
 
     @ApiProperty({
         example: "2025-01-14T10:30:00.000Z",
@@ -28,4 +41,11 @@ export class Cart extends Model<Cart, ICartAttr> {
         type: DataType.DATE,
     })
     createdAt: Date;
+
+    @BelongsTo(() => User)
+    user: User;
+
+    @HasMany(() => CartItem)
+    cartItems: CartItem[];
 }
+

@@ -15,14 +15,14 @@ export class PaymentTypeService {
   }
 
   findAll() {
-    return this.paymentTypeModel.findAll();
+    return this.paymentTypeModel.findAll({ include: { all: true}});
   }
 
   findOne(id: number) {
     return this.paymentTypeModel.findByPk(id);
   }
 
-  async update(id: number, updatePaymentTypeDto: UpdatePaymentTypeDto) {
+  async update(id: number, updatePaymentTypeDto: UpdatePaymentTypeDto): Promise<PaymentType> {
     const paymentType = await this.paymentTypeModel.update(
       { ...updatePaymentTypeDto },
       { where: { id }, returning: true },
