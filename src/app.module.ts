@@ -44,8 +44,7 @@ import { Rating } from './rating/models/rating.model';
   imports: [
     ConfigModule.forRoot({ envFilePath: '.env', isGlobal: true }),
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, 'static'),
-      serveRoot: "/static",
+      rootPath: join(__dirname, "..", 'static'),
     }),
     SequelizeModule.forRoot({
       dialect: 'postgres',
