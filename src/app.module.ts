@@ -27,8 +27,6 @@ import { Payment } from './payment/models/payment.model';
 import { Discount } from './discount/models/discount.model';
 import { City } from './city/models/city.model';
 import { Wishlist } from './wishlist/models/wishlist.model';
-import { ImagesModule } from './images/images.module';
-import { Image } from './images/models/image.model';
 import { FileModule } from './file/file.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'node:path';
@@ -69,7 +67,6 @@ import { Rating } from './rating/models/rating.model';
         Discount,
         City,
         Wishlist,
-        Image,
         CartItem,
         Region,
         Material,
@@ -92,7 +89,6 @@ import { Rating } from './rating/models/rating.model';
     PaymentModule,
     OrderItemModule,
     CartModule,
-    ImagesModule,
     FileModule,
     CartItemsModule,
     WishlistModule,

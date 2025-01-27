@@ -1,11 +1,23 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  Query,
+  UseInterceptors,
+  UploadedFiles,
+} from '@nestjs/common';
 import { ProductService } from './product.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Product } from './model/product.model';
 import { QueryFilterDto } from './dto/query-filter.dto';
-
+import { FilesInterceptor } from '@nestjs/platform-express';
+import { FormDataDto } from './dto/form-data.dto';
 
 @ApiTags('Product')
 @Controller('product')
@@ -18,9 +30,11 @@ export class ProductController {
     description: 'Added',
     type: Product,
   })
+  @UseInterceptors(FilesInterceptor('files', 10))
   @Post()
-  create(@Body() createProductDto: CreateProductDto) {
-    return this.productService.create(createProductDto);
+  create(@Body() formDataDto: FormDataDto, @UploadedFiles() files: Array<any>) {
+    const colors = formDataDto.colors.split(',');
+    return this.productService.create({ ...formDataDto, colors }, files);
   }
 
   @ApiOperation({ summary: 'Get all products with optional filters' })
@@ -51,9 +65,15 @@ export class ProductController {
     description: 'Update by Id',
     type: Product,
   })
+  @UseInterceptors(FilesInterceptor('files', 10))
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateProductDto: UpdateProductDto) {
-    return this.productService.update(+id, updateProductDto);
+  update(
+    @Param('id') id: string,
+    @Body() formDataDto: FormDataDto,
+    @UploadedFiles() files: Array<any>,
+  ) {
+    const colors = formDataDto.colors ? formDataDto.colors.split(',') : undefined;
+    return this.productService.update(+id, {...formDataDto, colors}, files);
   }
 
   @ApiOperation({ summary: 'Delete one data by Id' })

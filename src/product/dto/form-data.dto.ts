@@ -1,13 +1,16 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { Type } from 'class-transformer';
 import { IsArray, IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
+import { Min } from 'sequelize-typescript';
 
-export class CreateProductDto {
+export class FormDataDto {
   @ApiProperty({
     example: 'Divan',
     description: 'product name',
   })
   @IsString()
   @IsNotEmpty()
+  @IsOptional()
   title: string;
 
   @ApiProperty({
@@ -16,6 +19,7 @@ export class CreateProductDto {
   })
   @IsString()
   @IsNotEmpty()
+  @IsOptional()
   desc: string;
 
   @ApiProperty({
@@ -24,6 +28,7 @@ export class CreateProductDto {
   })
   @IsString()
   @IsNotEmpty()
+  @IsOptional()
   sales_package: string;
 
   @ApiProperty({
@@ -31,6 +36,8 @@ export class CreateProductDto {
     description: 'Mahsulot narxi',
   })
   @IsNumber()
+  @Type(() => Number)
+  @IsOptional()
   price: number;
 
   @ApiProperty({
@@ -38,6 +45,8 @@ export class CreateProductDto {
     description: 'Mahsulot kengligi (sm)',
   })
   @IsNumber()
+  @Type(() => Number)
+  @IsOptional()
   width: number;
 
   @ApiProperty({
@@ -45,6 +54,8 @@ export class CreateProductDto {
     description: 'Mahsulot balandligi (sm)',
   })
   @IsNumber()
+  @Type(() => Number)
+  @IsOptional()
   height: number;
 
   @ApiProperty({
@@ -52,6 +63,8 @@ export class CreateProductDto {
     description: "Mahsulot og'irligi (kg)",
   })
   @IsNumber()
+  @Type(() => Number)
+  @IsOptional()
   weight: number;
 
   @ApiProperty({
@@ -59,6 +72,8 @@ export class CreateProductDto {
     description: 'Mahsulot chuqurligi (sm)',
   })
   @IsNumber()
+  @Type(() => Number)
+  @IsOptional()
   depth: number;
 
   @ApiProperty({
@@ -66,6 +81,8 @@ export class CreateProductDto {
     description: 'Mahsulotga tegishli kategoriyaning ID-si',
   })
   @IsNumber()
+  @Type(() => Number)
+  @IsOptional()
   categoryId: number;
 
   @ApiProperty({
@@ -73,6 +90,8 @@ export class CreateProductDto {
     description: 'Ombordagi mahsulot miqdori',
   })
   @IsNumber()
+  @Type(() => Number)
+  @IsOptional()
   quantity: number;
 
   @ApiProperty({
@@ -81,6 +100,7 @@ export class CreateProductDto {
   })
   @IsString()
   @IsNotEmpty()
+  @IsOptional()
   created_country: string;
 
   @ApiProperty({
@@ -89,16 +109,17 @@ export class CreateProductDto {
   })
   @IsNumber()
   @IsOptional()
+  @Type(() => Number)
   garanty: number;
 
   @ApiProperty({
     example: ['Qizil', "Ko'k", 'Yashil'],
     description: 'Mahsulot ranglari',
   })
-  @IsArray()
   @IsString({ each: true })
   @IsNotEmpty()
-  colors: string[];
+  @IsOptional()
+  colors: string;
 
   @ApiProperty({
     example: 5,
@@ -106,6 +127,7 @@ export class CreateProductDto {
   })
   @IsNumber()
   @IsOptional()
+  @Type(() => Number)
   discountId: number;
 
   @ApiProperty({
@@ -114,6 +136,7 @@ export class CreateProductDto {
   })
   @IsString()
   @IsNotEmpty()
+  @IsOptional()
   filling_material: string;
 
   @ApiProperty({
@@ -122,6 +145,7 @@ export class CreateProductDto {
   })
   @IsString()
   @IsNotEmpty()
+  @IsOptional()
   upholstery_material: string;
 
   @ApiProperty({
@@ -134,13 +158,15 @@ export class CreateProductDto {
   secondary_material?: string;
 
   @ApiProperty({
-    example: [
-      'https://www.example.com/image1.png',
-      'https://www.example.com/image2.png',
-    ],
-    description: 'Array of product images',
+    type: 'array',
+    description: 'Array of image files (images)',
+    items: {
+      type: 'string',
+      example: 'example.jpg',
+      format: 'binary',
+    },
   })
   @IsArray()
   @IsOptional()
-  images?: string[];
+  images: string[];
 }

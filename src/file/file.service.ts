@@ -1,4 +1,4 @@
-import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import { BadRequestException, Injectable, InternalServerErrorException } from '@nestjs/common';
 import * as path from 'node:path';
 import * as fs from 'node:fs';
 import * as uuid from 'uuid';
@@ -7,8 +7,23 @@ import * as uuid from 'uuid';
 export class FileService {
   async saveFile(file: any): Promise<string> {
     try {
-      const fileName = uuid.v4() + '.jpg';
-      const filePath = path.resolve(__dirname, '..', 'static');
+      const mimeTypesMap = {
+        'image/jpeg': '.jpg',
+        'image/png': '.png',
+        'image/gif': '.gif',
+        'image/webp': '.webp',
+      };
+
+      if (!mimeTypesMap[file.mimetype]) {
+        throw new BadRequestException(
+          'Faqat ruxsat etilgan rasm formatlari yuklanishi mumkin (JPEG, PNG, GIF, WEBP).',
+        );
+      }
+
+      const fileExtension = mimeTypesMap[file.mimetype];
+      const fileName = uuid.v4() + fileExtension;
+
+      const filePath = path.resolve(__dirname, '..', "..", 'static');
 
       if (!fs.existsSync(filePath)) {
         fs.mkdirSync(filePath, { recursive: true });
@@ -25,7 +40,7 @@ export class FileService {
 
   async deleteFile(fileName: string): Promise<void> {
     try {
-      const filePath = path.resolve(__dirname, '..', 'static', fileName);
+      const filePath = path.resolve(__dirname, '..', "..", 'static', fileName);
       if (fs.existsSync(filePath)) {
         fs.unlinkSync(filePath);
       }

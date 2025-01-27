@@ -130,7 +130,6 @@ export class Product extends Model<Product, IProductCreationAttr> {
   @ForeignKey(() => Category)
   @Column({
     type: DataType.INTEGER,
-    allowNull: false,
   })
   categoryId: number;
   @BelongsTo(() => Category)
@@ -201,17 +200,12 @@ export class Product extends Model<Product, IProductCreationAttr> {
 
   @ApiProperty({
     example: 'Charm',
-    description: 'Mahsulotning qoplama materiali',
+    description: 'Mahsulot qoplamasining asosiy materiali',
   })
   @Column({
     type: DataType.STRING,
     allowNull: false,
   })
-  materialsId: number;
-
-    @HasMany(() => Rating)
-    ratings: Rating[]; 
-
   upholstery_material: string;
 
   @ApiProperty({
@@ -224,6 +218,15 @@ export class Product extends Model<Product, IProductCreationAttr> {
   })
   secondary_material?: string;
 
+  @ApiProperty({
+    example: "[image.png]",
+    description:"Product rasmlari"
+  })
+  @Column({
+    type: DataType.ARRAY(DataType.STRING),
+  })
+  images: string[]
+
   @HasMany(() => Wishlist)
   wishlist: Wishlist[];
 
@@ -235,5 +238,4 @@ export class Product extends Model<Product, IProductCreationAttr> {
 
   @HasMany(() => Rating)
   rating: Rating[];
-
 }

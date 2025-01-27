@@ -34,7 +34,8 @@ export class CartItemsController {
   @ApiOperation({ summary: 'Get a cart item by ID' })
   @ApiResponse({ status: 200, description: 'Cart item found successfully.' })
   @ApiResponse({ status: 404, description: 'Cart item not found.' })
-  @UseGuards(UserSelfGuard) 
+  @UseGuards(UserSelfGuard)
+  @UseGuards(UserGuard)
   @HttpCode(HttpStatus.OK)
   @Get(':id')
   findOne(@Param('id') id: string) {
@@ -46,9 +47,13 @@ export class CartItemsController {
   @ApiResponse({ status: 400, description: 'Invalid update data.' })
   @ApiResponse({ status: 404, description: 'Cart item not found.' })
   @UseGuards(UserSelfGuard)
+  @UseGuards(UserGuard)
   @HttpCode(HttpStatus.ACCEPTED)
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateCartItemDto: UpdateCartItemDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateCartItemDto: UpdateCartItemDto,
+  ) {
     return this.cartItemsService.update(+id, updateCartItemDto);
   }
 
@@ -56,6 +61,7 @@ export class CartItemsController {
   @ApiResponse({ status: 200, description: 'Cart item deleted successfully.' })
   @ApiResponse({ status: 404, description: 'Cart item not found.' })
   @UseGuards(UserSelfGuard)
+  @UseGuards(UserGuard)
   @HttpCode(HttpStatus.OK)
   @Delete(':id')
   remove(@Param('id') id: string) {

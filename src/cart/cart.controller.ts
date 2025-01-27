@@ -17,7 +17,7 @@ export class CartController {
   @ApiOperation({ summary: 'Create a new cart' })
   @ApiResponse({ status: 201, description: 'Cart successfully created.' })
   @UseGuards(UserGuard)
-  @HttpCode(HttpStatus.CREATED) 
+  @HttpCode(HttpStatus.CREATED)
   @Post()
   create(@Body() createCartDto: CreateCartDto) {
     return this.cartService.create(createCartDto);
@@ -31,11 +31,12 @@ export class CartController {
   findAll() {
     return this.cartService.findAll();
   }
-  
+
   @ApiOperation({ summary: 'Get a cart by ID' })
   @ApiResponse({ status: 200, description: 'Cart data.', type: Cart })
   @ApiResponse({ status: 404, description: 'Cart not found.' })
   @UseGuards(UserSelfGuard)
+  @UseGuards(UserGuard)
   @HttpCode(HttpStatus.OK)
   @Get(':id')
   findOne(@Param('id') id: string) {
@@ -43,8 +44,13 @@ export class CartController {
   }
 
   @ApiOperation({ summary: 'Update a Cart by ID' })
-  @ApiResponse({ status: 202, description: 'Cart successfully updated.', type: Cart })
-  @UseGuards(UserSelfForUpdateGuard) 
+  @ApiResponse({
+    status: 202,
+    description: 'Cart successfully updated.',
+    type: Cart,
+  })
+  @UseGuards(UserSelfGuard)
+  @UseGuards(UserGuard)
   @HttpCode(HttpStatus.ACCEPTED)
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateCartDto: UpdateCartDto) {
@@ -52,8 +58,13 @@ export class CartController {
   }
 
   @ApiOperation({ summary: 'Delete a Cart by ID' })
-  @ApiResponse({ status: 200, description: 'Cart successfully deleted.', type: Cart })
-  @UseGuards(UserSelfForUpdateGuard)
+  @ApiResponse({
+    status: 200,
+    description: 'Cart successfully deleted.',
+    type: Cart,
+  })
+  @UseGuards(UserSelfGuard)
+  @UseGuards(UserGuard)
   @HttpCode(HttpStatus.OK)
   @Delete(':id')
   remove(@Param('id') id: string) {
