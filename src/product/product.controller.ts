@@ -9,6 +9,7 @@ import {
   Query,
   UseInterceptors,
   UploadedFiles,
+  UseGuards,
 } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { CreateProductDto } from './dto/create-product.dto';
@@ -18,6 +19,7 @@ import { Product } from './model/product.model';
 import { QueryFilterDto } from './dto/query-filter.dto';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { FormDataDto } from './dto/form-data.dto';
+import { AdminGuard } from '../common/guards/admin.guard';
 
 @ApiTags('Product')
 @Controller('product')
@@ -30,6 +32,7 @@ export class ProductController {
     description: 'Added',
     type: Product,
   })
+  @UseGuards(AdminGuard)
   @UseInterceptors(FilesInterceptor('files', 10))
   @Post()
   create(@Body() formDataDto: FormDataDto, @UploadedFiles() files: Array<any>) {
@@ -65,6 +68,7 @@ export class ProductController {
     description: 'Update by Id',
     type: Product,
   })
+  @UseGuards(AdminGuard)
   @UseInterceptors(FilesInterceptor('files', 10))
   @Patch(':id')
   update(
@@ -72,8 +76,10 @@ export class ProductController {
     @Body() formDataDto: FormDataDto,
     @UploadedFiles() files: Array<any>,
   ) {
-    const colors = formDataDto.colors ? formDataDto.colors.split(',') : undefined;
-    return this.productService.update(+id, {...formDataDto, colors}, files);
+    const colors = formDataDto.colors
+      ? formDataDto.colors.split(',')
+      : undefined;
+    return this.productService.update(+id, { ...formDataDto, colors }, files);
   }
 
   @ApiOperation({ summary: 'Delete one data by Id' })
@@ -82,6 +88,7 @@ export class ProductController {
     description: 'Delete by Id',
     type: Number,
   })
+  @UseGuards(AdminGuard)
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.productService.remove(+id);
