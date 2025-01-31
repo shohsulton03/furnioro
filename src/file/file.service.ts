@@ -7,6 +7,13 @@ import * as uuid from 'uuid';
 export class FileService {
   async saveFile(file: any): Promise<string> {
     try {
+      if (!file || !file.mimetype) {
+        console.error('Fayl mavjud emas yoki noto‘g‘ri formatda:', file);
+        throw new BadRequestException(
+          'Fayl mavjud emas yoki noto‘g‘ri formatda',
+        );
+      }
+
       const mimeTypesMap = {
         'image/jpeg': '.jpg',
         'image/png': '.png',
@@ -15,6 +22,7 @@ export class FileService {
       };
 
       if (!mimeTypesMap[file.mimetype]) {
+        console.error('Yaroqsiz fayl turi:', file.mimetype);
         throw new BadRequestException(
           'Faqat ruxsat etilgan rasm formatlari yuklanishi mumkin (JPEG, PNG, GIF, WEBP).',
         );
@@ -22,8 +30,7 @@ export class FileService {
 
       const fileExtension = mimeTypesMap[file.mimetype];
       const fileName = uuid.v4() + fileExtension;
-
-      const filePath = path.resolve(__dirname, '..', "..", 'static');
+      const filePath = path.resolve(__dirname, '..', '..', 'static');
 
       if (!fs.existsSync(filePath)) {
         fs.mkdirSync(filePath, { recursive: true });
@@ -33,14 +40,19 @@ export class FileService {
 
       return fileName;
     } catch (error) {
-      console.log(error);
+      console.error('Xatolik:', error);
+
+      if (error instanceof BadRequestException) {
+        throw error; // Agar BadRequestException bo‘lsa, shu xatoni qaytaramiz
+      }
+
       throw new InternalServerErrorException('Rasmni faylga yozishda hatolik');
     }
   }
 
   async deleteFile(fileName: string): Promise<void> {
     try {
-      const filePath = path.resolve(__dirname, '..', "..", 'static', fileName);
+      const filePath = path.resolve(__dirname, '..', '..', 'static', fileName);
       if (fs.existsSync(filePath)) {
         fs.unlinkSync(filePath);
       }
