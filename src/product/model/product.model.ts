@@ -23,8 +23,9 @@ interface IProductCreationAttr {
   colors: string[];
   discountId: number;
   filling_material: string;
-  upholstery_material:string;
-  secondary_material:string
+  upholstery_material: string;
+  secondary_material: string;
+  isLike: boolean;
 }
 
 @Table({ tableName: 'product' })
@@ -219,13 +220,24 @@ export class Product extends Model<Product, IProductCreationAttr> {
   secondary_material?: string;
 
   @ApiProperty({
-    example: "[image.png]",
-    description:"Product rasmlari"
+    example: '[image.png]',
+    description: 'Product rasmlari',
   })
   @Column({
     type: DataType.ARRAY(DataType.STRING),
   })
-  images: string[]
+  images: string[];
+
+  @ApiProperty({
+    description: 'Oqilgan mahsulotlar raqami',
+    example: 4.5,
+    required: false,
+  })
+  @Column({
+    type: DataType.BOOLEAN,
+    defaultValue: false,
+  })
+  isLike?: boolean;
 
   @HasMany(() => Wishlist)
   wishlist: Wishlist[];

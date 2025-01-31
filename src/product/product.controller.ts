@@ -10,6 +10,7 @@ import {
   UseInterceptors,
   UploadedFiles,
   UseGuards,
+  Headers,
 } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { CreateProductDto } from './dto/create-product.dto';
@@ -47,8 +48,15 @@ export class ProductController {
     type: [Product],
   })
   @Get()
-  findAll(@Query() query: QueryFilterDto) {
-    return this.productService.findAll(query);
+  findAll(
+    @Query() query: QueryFilterDto,
+    @Headers('authorization') authorization?: string,
+  ) {
+    let token = null
+    if (authorization) {
+      token = authorization.replace('Bearer ', '').trim();
+    }
+    return this.productService.findAll(query, token);
   }
 
   @ApiOperation({ summary: 'Get one data by Id' })

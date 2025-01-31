@@ -12,14 +12,18 @@ import { Op } from 'sequelize';
 import { DiscountService } from 'src/discount/discount.service';
 import { CategoryService } from 'src/category/category.service';
 import { FileService } from '../file/file.service';
+import { JwtService } from '@nestjs/jwt';
+import { Wishlist } from '../wishlist/models/wishlist.model';
 
 @Injectable()
 export class ProductService {
   constructor(
     @InjectModel(Product) private productModel: typeof Product,
+    @InjectModel(Wishlist) private wishlistModel: typeof Wishlist,
     private categoryService: CategoryService,
     private discountService: DiscountService,
     private readonly fileService: FileService,
+    private readonly jwtService: JwtService,
   ) {}
 
   async create(createProductDto: CreateProductDto, files: Array<any>) {
@@ -57,7 +61,19 @@ export class ProductService {
     return this.productModel.create({ ...createProductDto });
   }
 
-  async findAll(query: QueryFilterDto) {
+  async findAll(query: QueryFilterDto, token: string) {
+    let likeProductIds = [];
+    if (token) {
+      try {
+        const { id } = this.jwtService.decode(token) as { id: string };
+        if (id) {
+          const likes = await this.wishlistModel.findAll({
+            where: { user_id: +id },
+          });
+          likeProductIds = likes.map((like) => +like.product_id);
+        }
+      } catch (error) {}
+    }
     const whereConditions: any = {};
 
     // Filtering based on fields
@@ -128,8 +144,13 @@ export class ProductService {
       order: [['id', 'DESC']],
     });
 
+    const productWithtLikes = rows.map((product) => ({
+      ...product.get({ plain: true }),
+      isLike: likeProductIds.includes(+product.id)
+    }));
+
     return {
-      data: rows,
+      data: productWithtLikes as Product[],
       totalCount: count,
       totalPages: Math.ceil(count / limit),
       currentPage: page,

@@ -9,6 +9,7 @@ import {
   Res,
   HttpCode,
   UseGuards,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { CreateAdminDto } from '../admin/dto/create-admin.dto';
@@ -170,5 +171,20 @@ export class AuthController {
     @Res({ passthrough: true }) res: Response,
   ) {
     return this.authService.refreshUserToken(refresh_token, res);
+  }
+
+  @ApiOperation({ summary: 'Check user token' })
+  @ApiResponse({
+    status: 200,
+    description: 'Token tekshirildi',
+    type: Object,
+  })
+  @HttpCode(200)
+  @Post('check')
+  async checkToken(@Body('token') token: string) {
+    if (!token) {
+      throw new UnauthorizedException('Token mavjud emas');
+    }
+    return await this.authService.checkToken(token);
   }
 }

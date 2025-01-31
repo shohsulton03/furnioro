@@ -418,4 +418,18 @@ export class AuthService {
       throw new InternalServerErrorException();
     }
   }
+
+  async checkToken(token: string) {
+    try {
+      const decoded = await this.jwtService.verify(token, {
+        secret: process.env.ACCESS_TOKEN_KEY,
+      });
+      return {
+        message: 'Token valid',
+        user: decoded,
+      };
+    } catch (error) {
+      throw new UnauthorizedException('Token noto‘g‘ri yoki muddati o‘tgan');
+    }
+  }
 }

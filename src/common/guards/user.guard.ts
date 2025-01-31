@@ -38,9 +38,13 @@ export class UserGuard implements CanActivate {
         });
 
       } catch (error) {
-        payload = await jwtService.verify(token, {
-          secret: process.env.ACCESS_TOKEN_ADMIN_KEY,
-        });
+        try {
+          payload = await this.jwtService.verify(token, {
+            secret: process.env.ACCESS_TOKEN_ADMIN_KEY,
+          });
+        } catch (error) {
+          throw new UnauthorizedException('Invalid token');
+        }
       }
 
       if (!payload) {
