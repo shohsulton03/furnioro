@@ -34,8 +34,8 @@ export class AuthController {
     description: 'Registered',
     type: Object,
   })
-  // @UseGuards(AdminCreatorGuard)
-  // @UseGuards(AdminGuard)
+  @UseGuards(AdminCreatorGuard)
+  @UseGuards(AdminGuard)
   @Post('signup-admin')
   async signUpAdmin(
     @Body() createAdminDto: CreateAdminDto,
