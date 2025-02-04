@@ -4,6 +4,7 @@ import { Cart } from "src/cart/models/cart.model";
 import { Order } from "src/order/models/order.model";
 import { Rating } from "../../rating/models/rating.model";
 import { Wishlist } from "src/wishlist/models/wishlist.model";
+import { OrderAddress } from "../../order_address/models/order_address.model";
 
 interface IUserCreationAttr {
   full_name: string;
@@ -92,4 +93,7 @@ export class User extends Model<User, IUserCreationAttr> {
 
   @HasMany(() => Order)
   orders: Order[];
+
+  @HasMany(() => OrderAddress)
+  order_addresses: OrderAddress[];
 }

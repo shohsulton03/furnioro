@@ -9,7 +9,6 @@ import { AuthModule } from './auth/auth.module';
 import { Otp } from './auth/models/otp.model';
 import { MailModule } from './mail/mail.module';
 import { DiscountModule } from './discount/discount.module';
-import { CityModule } from './city/city.module';
 import { PaymentTypeModule } from './payment_type/payment_type.module';
 import { PaymentType } from './payment_type/models/payment_type.model';
 import { CategoryModule } from './category/category.module';
@@ -25,7 +24,6 @@ import { CartModule } from './cart/cart.module';
 import { Cart } from './cart/models/cart.model';
 import { Payment } from './payment/models/payment.model';
 import { Discount } from './discount/models/discount.model';
-import { City } from './city/models/city.model';
 import { Wishlist } from './wishlist/models/wishlist.model';
 import { FileModule } from './file/file.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
@@ -33,12 +31,12 @@ import { join } from 'node:path';
 import { CartItem } from './cart_items/models/cart_item.model';
 import { CartItemsModule } from './cart_items/cart_items.module';
 import { WishlistModule } from './wishlist/wishlist.module';
-import { RegionModule } from './region/region.module';
-import { Region } from './region/models/region.model';
 import { Material } from './material/models/material.model';
 import { MaterialModule } from './material/material.module';
 import { RatingModule } from './rating/rating.module'; 
 import { Rating } from './rating/models/rating.model';
+import { OrderAddressModule } from './order_address/order_address.module';
+import { OrderAddress } from './order_address/models/order_address.model';
 
 @Module({
   imports: [
@@ -65,12 +63,11 @@ import { Rating } from './rating/models/rating.model';
         Cart,
         Payment,
         Discount,
-        City,
         Wishlist,
         CartItem,
-        Region,
         Material,
-        Rating
+        Rating,
+        OrderAddress
       ],
       autoLoadModels: true,
       sync: { alter: true },
@@ -81,7 +78,6 @@ import { Rating } from './rating/models/rating.model';
     AuthModule,
     MailModule,
     DiscountModule,
-    CityModule,
     PaymentTypeModule,
     CategoryModule,
     ProductModule,
@@ -92,9 +88,9 @@ import { Rating } from './rating/models/rating.model';
     FileModule,
     CartItemsModule,
     WishlistModule,
-    RegionModule,
     MaterialModule,
-    RatingModule
+    RatingModule,
+    OrderAddressModule
   ],
   controllers: [],
   providers: [],

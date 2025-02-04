@@ -42,6 +42,8 @@ export class UserService {
         throw new BadRequestException({
           message: 'Phone number already exists.',
         });
+      } else if (error instanceof BadRequestException) {
+        throw error; // Agar BadRequestException bo‘lsa, shu xatoni qaytaramiz
       } else {
         throw new InternalServerErrorException({
           message: 'An internal server error occurred.',

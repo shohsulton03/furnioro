@@ -1,11 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { DATE } from 'sequelize';
 import { BelongsTo, Column, DataType, ForeignKey, HasMany, Model, Table } from 'sequelize-typescript';
-import { City } from 'src/city/models/city.model';
 import { OrderItem } from 'src/order-item/models/order-item.model';
 import { Payment } from 'src/payment/models/payment.model';
-import { Region } from 'src/region/models/region.model';
 import { User } from 'src/user/models/user.model';
+import { OrderAddress } from '../../order_address/models/order_address.model';
 
 export enum OrderStatus {
   Pending = 'Pending',
@@ -17,12 +16,7 @@ export enum OrderStatus {
 
 interface IOrderCreateinAttr {
   userId: number;
-  address: string;
-  regionId: number;
-  cityId: number;
-  zip_code: string;
-  phone_number: string;
-  email: string;
+  order_addressId: number;
   order_date: Date;
   total_amount: number;
   status: OrderStatus;
@@ -53,61 +47,14 @@ export class Order extends Model<Order, IOrderCreateinAttr> {
   userId: number;
 
   @ApiProperty({
-    example: '123 Main St',
-    description: 'Address for delivery',
-  })
-  @Column({
-    type: DataType.STRING,
-    allowNull: false,
-  })
-  address: string;
-
-  @ApiProperty({
     example: 1,
-    description: 'Region ID',
+    description: 'Order Address ID',
   })
-  @ForeignKey(() => Region)
+  @ForeignKey(() => OrderAddress)
   @Column({
     type: DataType.INTEGER,
   })
-  regionId: number;
-
-  @ApiProperty({
-    example: 1,
-    description: 'City ID',
-  })
-  @ForeignKey(() => City)
-  @Column({
-    type: DataType.INTEGER,
-  })
-  cityId: number;
-
-  @ApiProperty({
-    example: '10001',
-    description: 'ZIP code for the delivery address',
-  })
-  @Column({
-    type: DataType.STRING,
-  })
-  zip_code: string;
-
-  @ApiProperty({
-    example: '123-456-7890',
-    description: 'Phone number for contact',
-  })
-  @Column({
-    type: DataType.STRING,
-  })
-  phone_number: string;
-
-  @ApiProperty({
-    example: 'user@example.com',
-    description: 'Email address for contact',
-  })
-  @Column({
-    type: DataType.STRING,
-  })
-  email: string;
+  order_addressId: number;
 
   @ApiProperty({
     example: new Date(),
@@ -137,7 +84,7 @@ export class Order extends Model<Order, IOrderCreateinAttr> {
   })
   status: OrderStatus;
 
-  @HasMany(() => OrderItem)
+  @HasMany(() => OrderItem, { onDelete: 'CASCADE' })
   orderItems: OrderItem[];
 
   @HasMany(() => Payment)
@@ -146,9 +93,6 @@ export class Order extends Model<Order, IOrderCreateinAttr> {
   @BelongsTo(() => User)
   user: User;
 
-  @BelongsTo(() => Region)
-  region: Region;
-
-  @BelongsTo(() => City)
-  city: City;
+  @BelongsTo(() => OrderAddress)
+  order_address: OrderAddress;
 }
